@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button";
+import React from "react";
 
-export default function Home() {
+function page() {
   return (
     <div>
-      <Button variant="destructive">
-        Klik
-      </Button>
+      <button className="card_third w-32 h-16">
+        <h1>caso</h1>
+      </button>
     </div>
-  )
+  );
 }
+
+export default page;
