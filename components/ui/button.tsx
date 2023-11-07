@@ -18,7 +18,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        skew: "accent_main mt-6 -skew-x-[15deg] rounded-xl w-[170px] h-[49px] mx-auto text-white text-sm capitalize"
+        skew: "accent_main mt-6 -skew-x-[15deg] rounded-xl w-40 h-12 mx-auto text-white text-sm capitalize",
       },
       size: {
         default: "h-10 px-4 py-2",
