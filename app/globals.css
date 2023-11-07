@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+:root {
+  height: 100%;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -105,4 +111,52 @@
     rgba(31, 31, 31, 0.56) 37.41%,
     rgba(28, 28, 28, 0.96) 99.49%
   );
+}
+
+.cl-internal-b3fm6y {
+  display: none;
+}
+
+.cl-internal-uyu30o {
+  display: none;
+}
+
+.cl-headerTitle {
+  margin: 0 auto;
+}
+
+.cl-headerSubtitle {
+  display: none;
+}
+
+.cl-formFieldLabelRow {
+  opacity: 0;
+}
+
+.cl-formFieldInput__emailAddress:-webkit-input-placeholder::before {
+  content: "Email";
+}
+
+.auth-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      0deg,
+      rgba(20, 20, 20, 0.57) 0%,
+      rgba(20, 20, 20, 0.37) 58.85%,
+      rgba(20, 20, 20, 0.6) 100%
+    ),
+    rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.cl-headerTitle {
+  content: "Sign Up";
+}
+
+input:-webkit-autofill{
+  -webkit-text-fill-color: #e2e2e2 !important;
+  -webkit-box-shadow: 0 5px 90px 90px #191919 inset !important;
 }

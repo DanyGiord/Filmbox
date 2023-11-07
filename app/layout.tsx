@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
 import "./globals.css";
 
 const lexend = Lexend_Deca({
@@ -27,7 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{ 
+        baseTheme: dark
+      }}
+    >
       <html lang="en">
         <body className={lexend.className}>{children}</body>
       </html>
