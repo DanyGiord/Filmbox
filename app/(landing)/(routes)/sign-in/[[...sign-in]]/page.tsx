@@ -1,24 +1,3 @@
-// import { SignIn } from "@clerk/nextjs";
-
-// export default function Page() {
-//   return (
-//     <SignIn
-//       afterSignInUrl="/customize"
-//       appearance={{
-//         elements: {
-//           card: "shadow-none bg-transparent",
-//           logoBox: "mx-auto flex justify-center mb-24",
-//           logoImage: "scale-[1.5]",
-//           formButtonPrimary:
-//             "accent_main mt-6 -skew-x-[16deg] rounded-[12px] w-[204px] h-[49px] mx-auto text-[#FAFAFA] text-[18px] capitalize",
-//           formFieldInput: "px-[24px] py-[12px] rounded-[24px] leading-[38px] border-none border-0 focus:ring-0",
-//           footer: "mx-auto",
-//         },
-//       }}
-//     />
-//   );
-// }
-
 "use client";
 
 import * as React from "react";
