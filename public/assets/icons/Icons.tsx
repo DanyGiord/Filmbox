@@ -23,3 +23,4 @@ export { default as Sound } from "./Sound.svg";
 export { default as Tv } from "./Tv.svg";
 export { default as Twitter } from "./Twitter.svg";
 export { default as User } from "./User.svg";
+export { default as Eye } from "./Eye.svg";

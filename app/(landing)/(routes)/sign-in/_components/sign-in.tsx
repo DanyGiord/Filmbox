@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import * as Icons from "@/public/assets/icons/Icons";
 
 export default function SignInForm() {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -70,6 +71,7 @@ export default function SignInForm() {
         <div>
           <Input
             placeholder="Password"
+            iconSrc={Icons.Eye}
             onChange={(e) => setPassword(e.target.value)}
             id="password"
             name="password"
