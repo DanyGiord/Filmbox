@@ -1,7 +1,16 @@
 import React from "react";
 import Image from "next/image";
+import { auth } from "@clerk/nextjs";
+
+import { redirect } from 'next/navigation';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
+    const { userId } = auth();
+
+    if(userId) {
+        redirect('/')
+    }
+
     return ( 
         <div className="h-full bg-[url(/./assets/backgrounds/auth-bg.jpg)] bg-center bg-cover flex items-center justify-center">
             <div className="auth-overlay"></div>
