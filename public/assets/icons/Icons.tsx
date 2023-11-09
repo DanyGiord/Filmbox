@@ -25,3 +25,5 @@ export { default as Twitter } from "./Twitter.svg";
 export { default as User } from "./User.svg";
 export { default as Eye } from "./Eye.svg";
 export { default as Search } from "./Search.svg";
+export { default as Dot } from "./Dot.svg";
+export { default as DotRed } from "./Dot_red.svg";

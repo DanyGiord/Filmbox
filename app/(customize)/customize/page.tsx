@@ -1,4 +1,4 @@
-import MovieCard from "@/components/ui/cards/MovieCard";
+import MovieCard from "@/components/cards/MovieCard";
 import { Input } from "@/components/ui/input";
 import * as Icons from "@/public/assets/icons/Icons";
 
@@ -13,7 +13,9 @@ const CustomizePage = () => {
         <div className="w-80 mt-4">
           <Input placeholder="Find a movie" iconSrc={Icons.Search} />
         </div>
-        <MovieCard />
+        <div className="w-2/4">
+          <MovieCard />
+        </div>
         {/* ovde ide component movie cards */}
       </div>
     </div>
