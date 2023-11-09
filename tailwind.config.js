@@ -23,6 +23,7 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         input_bg: "#191919",
+        red: "#f3001d",
         black_main: "#0E0E0E",
         black_second: "#1A1A1A",
         black_third: "#1F1F1F",

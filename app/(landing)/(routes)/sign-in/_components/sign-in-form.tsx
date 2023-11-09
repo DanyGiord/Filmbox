@@ -1,74 +1,100 @@
-'use client'
- 
+"use client";
 import * as React from "react";
 import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
- 
+import * as Icons from "@/public/assets/icons/Icons";
+
 export default function SignInForm() {
   const { isLoaded, signIn, setActive } = useSignIn();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
   const router = useRouter();
- 
-  // Handle the submission of the sign-in form
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLoaded) {
       return;
     }
- 
-    // Start the sign-in process using the email and password provided
+
     try {
       const completeSignIn = await signIn.create({
         identifier: email,
         password,
       });
- 
-      if (completeSignIn.status !== 'complete') {
-        // The status can also be `needs_factor_on', 'needs_factor_two', or 'needs_identifier'
-        // Please see https://clerk.com/docs/references/react/use-sign-in#result-status for  more information
+
+      if (completeSignIn.status !== "complete") {
         console.log(JSON.stringify(completeSignIn, null, 2));
       }
- 
-      if (completeSignIn.status === 'complete') {
-        // If complete, user exists and provided password match -- set session active
+
+      if (completeSignIn.status === "complete") {
         await setActive({ session: completeSignIn.createdSessionId });
-        // Redirect the user to a post sign-in route
-        router.push('/customize');
+        router.push("/customize");
       }
     } catch (err: any) {
-      // This can return an array of errors.
-      // See https://clerk.com/docs/custom-flows/error-handling to learn about error handling
-      setErrorMessage(err.status)
+      setErrorMessage(err.status);
       console.log(errorMessage);
-      
+
       console.error(JSON.stringify(err, null, 2));
     }
   };
- 
-  // Display a form to capture the user's email and password
+
   return (
-    <div className="w-[350px] p-4 md:p-0">
-        <h2 className="text-3xl text-white text-center font-semibold mb-10">Sign In</h2>
-        <form onSubmit={(e) => handleSubmit(e)} className="flex flex-col justify-center">
-          <div>
-            <Input placeholder="Email Adress" onChange={(e) => setEmail(e.target.value)} id="email" name="email" type="email" value={email} className="mb-6" />
-          </div>
-          <div>
-            <Input placeholder="Password" onChange={(e) => setPassword(e.target.value)} id="password" name="password" type="password" value={password} />
-          </div>
-          <Button type="submit" variant='skew' className="mx-auto">
-            Continue
-          </Button>
-        </form>
-        <div className="mt-24 text-start text-white ">
-          <p>Forgot password? <span><Link href="/reset-password" className="hover:text-[#f3001d]">Reset password</Link></span> </p>
-          <p>Don't have an account? <span><Link href="/sign-up" className="hover:text-[#f3001d]">Sign Up</Link></span> </p>
+    <div className="w-80 p-4 md:p-0">
+      <h2 className="text-3xl text-white text-center font-semibold mb-10">
+        Sign In
+      </h2>
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="flex flex-col justify-center"
+      >
+        <div>
+          <Input
+            placeholder="Email Address"
+            onChange={(e) => setEmail(e.target.value)}
+            id="email"
+            name="email"
+            type="email"
+            value={email}
+            className="mb-6"
+          />
         </div>
+        <div>
+          <Input
+            placeholder="Password"
+            iconSrc={Icons.Eye}
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+          />
+        </div>
+        <Button type="submit" variant="skew" className="mx-auto">
+          Continue
+        </Button>
+      </form>
+      <div className="mt-24 text-center text-white absolute bottom-9 left-0 right-0">
+        <p>
+          Forgot password?{" "}
+          <span>
+            <Link href="/reset-password" className="hover:text-red underline">
+              Reset password
+            </Link>
+          </span>
+        </p>
+        <p>
+          Don&apos;t have an account?{" "}
+          <span>
+            <Link href="/sign-up" className="hover:text-red underline">
+              Sign Up
+            </Link>
+          </span>
+        </p>
+      </div>
     </div>
   );
 }
