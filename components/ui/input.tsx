@@ -15,13 +15,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <Image
             src={iconSrc}
             alt="Icon"
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 h-7 w-7"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-7"
           />
         )}
         <input
           type={type}
           className={cn(
-            "pl-10 h-14 w-full rounded-2xl px-6 py-3 text-sm font-normal ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray leading-[30px]focus-visible:outline-none text-white_second focus:outline-none focus-visible:ring-0 focus-visible:border-0 bg-input_bg focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 valid:bg-input_bg caret-white_second",
+            "pl-10 h-14 w-full rounded-3xl px-6 py-3 text-sm font-normal ring-offset-0 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray leading-[30px]focus-visible:outline-none text-white_second focus:outline-none focus-visible:ring-0 focus-visible:border-0 bg-input_bg focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 valid:bg-input_bg caret-white_second",
             className
           )}
           ref={ref}

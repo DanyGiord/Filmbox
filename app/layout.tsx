@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
-import { ClerkProvider } from '@clerk/nextjs';
-import { dark } from '@clerk/themes';
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import "./globals.css";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
       {
         url: "/favicon.ico",
         href: "/favicon.ico",
-      }
+      },
     ],
   },
 };
@@ -29,11 +29,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <ClerkProvider
-      appearance={{ 
-        baseTheme: dark
+      appearance={{
+        baseTheme: dark,
       }}
     >
       <html lang="en">
