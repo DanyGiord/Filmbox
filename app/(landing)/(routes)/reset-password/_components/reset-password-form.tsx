@@ -1,13 +1,16 @@
 "use client";
 
-import React, { SyntheticEvent, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useSignIn } from "@clerk/nextjs";
 import type { NextPage } from "next";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { SyntheticEvent, useState } from "react";
 
-import { useRouter, redirect } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
 
 const ResetPasswordForm: NextPage = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +19,7 @@ const ResetPasswordForm: NextPage = () => {
   const [successfulCreation, setSuccessfulCreation] = useState(false);
   const [complete, setComplete] = useState(false);
   const [secondFactor, setSecondFactor] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { isLoaded, signIn, setActive } = useSignIn();
 
@@ -25,21 +29,64 @@ const ResetPasswordForm: NextPage = () => {
     return null;
   }
 
+  const hashEmail = (email: string) => {
+    const firstEmailPiece = email.split("@")[0];
+    const secondEmailPiece = "@" + email.split("@")[1];
+
+    const hashedFirstPiece = firstEmailPiece.replace(/(?<=.{3})./g, "*");
+
+    const hashedEmail = hashedFirstPiece + secondEmailPiece;
+
+    return hashedEmail;
+  };
+
   async function create(e: SyntheticEvent) {
     e.preventDefault();
+    setIsLoading(true);
     await signIn
       ?.create({
         strategy: "reset_password_email_code",
         identifier: email,
       })
       .then((_) => {
+        const hashedEmail = hashEmail(email);
+
+        toast.success(`Password recovery code sent to ${hashedEmail}`, {
+          style: {
+            background: "#1a1a1a",
+            color: "#fcfcfc",
+            textAlign: "center"
+          },
+          position: "bottom-center",
+          duration: 4000
+        });
+
         setSuccessfulCreation(true);
+        setIsLoading(false);
       })
-      .catch((err) => console.error("error", err.errors[0].longMessage));
+      .catch((err) => {
+        const response = JSON.stringify(err, null, 2);
+        const message = JSON.parse(response).errors[0].message;
+
+        toast.error(message, {
+          style: {
+            background: "#1a1a1a",
+            color: "#fcfcfc",
+            textAlign: "center"
+          },
+          position: "bottom-center",
+          duration: 4000
+        });
+
+        setIsLoading(false);
+
+        console.error("error", err.errors[0].longMessage);
+      });
   }
 
   async function reset(e: SyntheticEvent) {
     e.preventDefault();
+    setIsLoading(true);
     await signIn
       ?.attemptFirstFactor({
         strategy: "reset_password_email_code",
@@ -50,19 +97,46 @@ const ResetPasswordForm: NextPage = () => {
         if (result.status === "needs_second_factor") {
           setSecondFactor(true);
         } else if (result.status === "complete") {
+          toast.success(`New password is successfully set`, {
+            style: {
+              background: "#1a1a1a",
+              color: "#fcfcfc",
+              textAlign: "center"
+            },
+            position: "bottom-center",
+            duration: 4000
+          });
           setActive({ session: result.createdSessionId });
           setComplete(true);
-          redirect("/customize");
+          router.push("/customize");
         } else {
           console.log(result);
         }
+        setIsLoading(false);
       })
-      .catch((err) => console.error("error", err.errors[0].longMessage));
+      .catch((err) => {
+        const response = JSON.stringify(err, null, 2);
+        const message = JSON.parse(response).errors[0].longMessage;
+
+        toast.error(message, {
+          style: {
+            background: "#1a1a1a",
+            color: "#fcfcfc",
+            textAlign: "center"
+          },
+          position: "bottom-center",
+          duration: 4000
+        });
+
+        setIsLoading(false);
+
+        console.error("error", err.errors[0].longMessage);
+      });
   }
 
   return (
     <div className="w-80 p-4 md:p-0">
-      <h1 className="text-white text-2xl">Password recovery</h1>
+      <h1 className="text-white text-2xl text-center">Password recovery</h1>
       <form
         className="flex flex-col justify-center my-6"
         onSubmit={!successfulCreation ? create : reset}
@@ -73,10 +147,20 @@ const ResetPasswordForm: NextPage = () => {
               type="email"
               placeholder="Enter your email"
               value={email}
+              disabled={isLoading}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Button type="submit" variant="skew" className="mx-auto">
-              Continue
+            <Button
+              type="submit"
+              variant="skew"
+              className="mx-auto  disabled:opacity-50 disabled:cursor-progress"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                "Continue"
+              )}
             </Button>
           </>
         )}
@@ -87,6 +171,7 @@ const ResetPasswordForm: NextPage = () => {
               placeholder="New password"
               type="password"
               value={password}
+              disabled={isLoading}
               onChange={(e) => setPassword(e.target.value)}
               className="mb-6"
             />
@@ -94,30 +179,19 @@ const ResetPasswordForm: NextPage = () => {
             <Input
               placeholder="Code from your email"
               type="text"
+              disabled={isLoading}
               value={code}
               onChange={(e) => setCode(e.target.value)}
             />
-
-            <Button type="submit" variant="skew" className="mx-auto">
-              Reset
+            <Button type="submit" variant="skew" className="mx-auto  disabled:opacity-50 disabled:cursor-progress">
+              {isLoading ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                "Reset"
+              )}
             </Button>
           </>
         )}
-
-        {complete && (
-          <>
-            <p>You successfully changed you password</p>
-            <Button
-              type="submit"
-              variant="skew"
-              className="mx-auto"
-              onClick={() => router}
-            >
-              <Link href="/">Dive into app</Link>
-            </Button>
-          </>
-        )}
-        {secondFactor && "2FA is required, this UI does not handle that"}
       </form>
       <div className="mt-24 text-center text-white absolute bottom-9 left-0 right-0">
         <p>

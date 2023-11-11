@@ -5,17 +5,19 @@ import { cn } from "@/lib/utils";
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   iconSrc?: string;
+  onClick?: () => void;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, iconSrc, ...props }, ref) => {
+  ({ className, type, iconSrc, onClick, ...props }, ref) => {
     return (
       <div className="relative">
         {iconSrc && (
           <Image
             src={iconSrc}
             alt="Icon"
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-7"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 cursor-pointer"
+            onClick={onClick}
           />
         )}
         <input

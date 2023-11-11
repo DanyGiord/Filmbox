@@ -1,10 +1,12 @@
 import MovieCard from "@/components/cards/MovieCard";
 import { Input } from "@/components/ui/input";
 import * as Icons from "@/public/assets/icons/Icons";
+import { UserButton } from "@clerk/nextjs";
 
 const CustomizePage = () => {
   return (
     <div className="bg-black_main w-full h-screen">
+      <UserButton afterSignOutUrl="/sign-in"/>
       <div className="flex flex-col justify-center items-center text-center pt-10">
         <h1 className="text-white text-4xl font-bold">
           Select your favorite movies

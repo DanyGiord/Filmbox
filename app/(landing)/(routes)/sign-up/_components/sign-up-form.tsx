@@ -1,20 +1,23 @@
 "use client";
-import * as React from "react";
-import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { ClerkAPIErrorJSON } from "@clerk/types";
-import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useSignUp } from "@clerk/nextjs";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
-import * as Icons from "@/public/assets/icons/Icons";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function SignUpForm() {
   const { isLoaded, signUp, setActive } = useSignUp();
-  const [emailAddress, setEmailAddress] = React.useState("");
-  const [hashedEmailAddress, setHashedEmailAddress] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [verifying, setVerifying] = React.useState(false);
-  const [code, setCode] = React.useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [code, setCode] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
   const hashEmail = (email: string) => {
@@ -25,14 +28,16 @@ export default function SignUpForm() {
 
     const hashedEmail = hashedFirstPiece + secondEmailPiece;
 
-    setHashedEmailAddress(hashedEmail);
+    return hashedEmail;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLoaded) return;
 
     try {
+      setIsLoading(true);
+
       await signUp.create({
         emailAddress,
         password,
@@ -42,18 +47,48 @@ export default function SignUpForm() {
         strategy: "email_code",
       });
 
+      const hashedEmail = hashEmail(emailAddress);
+
+      toast.success(`Verification code sent to ${hashedEmail}`, {
+        style: {
+          background: "#1a1a1a",
+          color: "#fcfcfc",
+          textAlign: "center"
+        },
+        position: "bottom-center",
+        duration: 4000
+      });
+
       setVerifying(true);
-      hashEmail(emailAddress);
     } catch (err: any) {
+      const response = JSON.stringify(err, null, 2);
+      const message = JSON.parse(response).errors[0].message;
+
+      toast.error(message, {
+        style: {
+          background: "#1a1a1a",
+          color: "#fcfcfc",
+          textAlign: "center"
+        },
+        position: "bottom-center",
+        duration: 4000
+      });
+
+      setIsLoading(false);
+
       console.error("Error:", JSON.stringify(err, null, 2));
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleVerify = async (e: React.FormEvent) => {
+  const handleVerify = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLoaded) return;
 
     try {
+      setIsLoading(true);
+
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
@@ -63,31 +98,62 @@ export default function SignUpForm() {
       }
 
       if (completeSignUp.status === "complete") {
+        toast.success("Your account has been verified successfully", {
+          style: {
+            background: "#1a1a1a",
+            color: "#fcfcfc",
+            textAlign: "center"
+          },
+          position: "bottom-center",
+          duration: 5000
+        });
+
         await setActive({ session: completeSignUp.createdSessionId });
-        router.push("/");
+        router.push("/customize");
       }
     } catch (err: any) {
+      const response = JSON.stringify(err, null, 2);
+      const message = JSON.parse(response).errors[0].longMessage;
+
+      toast.error(message, {
+        style: {
+          background: "#1a1a1a",
+          color: "#fcfcfc",
+          textAlign: "center"
+        },
+        position: "bottom-center",
+        duration: 5000
+      });
+
+      setIsLoading(false);
+
       console.error("Error:", JSON.stringify(err, null, 2));
+    } finally {
+      setIsLoading(false);
     }
   };
 
   if (verifying) {
     return (
       <div className="w-80 p-4 md:p-0">
-        <p className="text-white text-center mb-6">
-          Verification code sent to{" "}
-          <span className="font-bold">{hashedEmailAddress}</span>
-        </p>
+        <h2 className="text-3xl text-white text-center font-semibold mb-10">
+          Verify your email
+        </h2>
         <form onSubmit={handleVerify} className="flex flex-col justify-center">
           <Input
             placeholder="Enter your code"
             value={code}
             id="code"
             name="code"
+            disabled={isLoading}
             onChange={(e) => setCode(e.target.value)}
           />
-          <Button type="submit" variant="skew" className="mx-auto">
-            Complete Sign Up
+          <Button type="submit" variant="skew" className="mx-auto disabled:opacity-50 disabled:cursor-progress">
+            {isLoading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              "Complete sign up"
+            )}
           </Button>
         </form>
       </div>
@@ -108,22 +174,40 @@ export default function SignUpForm() {
             name="email"
             value={emailAddress}
             onChange={(e) => setEmailAddress(e.target.value)}
+            disabled={isLoading}
             className="mb-6"
           />
         </div>
         <div>
-          <Input
-            placeholder="Password"
-            iconSrc={Icons.Eye}
-            id="password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <div className="relative">
+            <Input
+              placeholder="Password"
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={password}
+              disabled={isLoading}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {showPassword ? (
+              <Eye
+                onClick={() => setShowPassword(false)}
+                className="text-white_second absolute right-5 top-1/2 transform -translate-y-1/2 h-5 w-5 cursor-pointer"
+              />
+            ) : (
+              <EyeOff
+                onClick={() => setShowPassword(true)}
+                className="text-[#565656] absolute right-5 top-1/2 transform -translate-y-1/2 h-5 w-5 cursor-pointer"
+              />
+            )}
+          </div>
         </div>
-        <Button type="submit" variant="skew" className="mx-auto">
-          Verify email
+        <Button type="submit" variant="skew" className="mx-auto disabled:opacity-50 disabled:cursor-progress">
+          {isLoading ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            "Verify email"
+          )}
         </Button>
       </form>
       <div className="mt-24 text-center text-white absolute bottom-9 left-0 right-0">
