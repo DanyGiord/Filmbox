@@ -30,3 +30,5 @@ export { default as CategoryIcon } from "./dynamic-icons/CategoryIcon";
 export { default as UserIcon } from "./dynamic-icons/UserIcon";
 export { default as HeartIcon } from "./dynamic-icons/HeartIcon";
 export { default as MessageIcon } from "./dynamic-icons/MessageIcon";
+export { default as Dot } from "./Dot.svg";
+export { default as DotRed } from "./Dot_red.svg";
