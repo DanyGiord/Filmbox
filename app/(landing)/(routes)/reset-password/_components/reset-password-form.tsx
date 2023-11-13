@@ -11,8 +11,9 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
-
 const ResetPasswordForm: NextPage = () => {
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
@@ -108,7 +109,7 @@ const ResetPasswordForm: NextPage = () => {
           });
           setActive({ session: result.createdSessionId });
           setComplete(true);
-          router.push("/customize");
+          router.push("/home");
         } else {
           console.log(result);
         }

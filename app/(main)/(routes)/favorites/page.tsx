@@ -1,8 +1,8 @@
+import Favorites from "./_components/favorites";
+    
 const FavoritesPage = () => {
     return (
-        <div className="text-center">
-            Welcome to the Favorites page!
-        </div>
+        <Favorites />
     );
 }
  

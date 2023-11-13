@@ -1,11 +1,9 @@
-import HomeNavbar from "./_components/home-navbar";
-
+import Home from "./_components/home";
+    
 const HomePage = () => {
   return (
-    <div className="h-screen bg-black_main border">                                      {/* obrisati h-screen */}
-        <HomeNavbar />
-    </div>
-  );
+    <Home />
+  )
 };
 
 export default HomePage;
