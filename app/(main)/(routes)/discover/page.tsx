@@ -1,8 +1,8 @@
+import Discover from "./_components/discover";
+    
 const DiscoverPage = () => {
     return (
-        <div className="text-center">
-            Welcome to the Discover page!
-        </div>
+        <Discover />
     );
 }
  

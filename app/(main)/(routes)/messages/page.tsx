@@ -1,8 +1,8 @@
+import Messages from "./_components/messages";
+    
 const MessagesPage = () => {
     return (
-        <div className="text-center">
-            Welcome to the Messages page!
-        </div>
+        <Messages />
     );
 }
  

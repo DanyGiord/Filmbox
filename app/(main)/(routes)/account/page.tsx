@@ -1,8 +1,8 @@
+import Account from "./_components/account"
+
 const AccountPage = () => {
     return (
-        <div className="text-center">
-            Welcome to the Account page!
-        </div>
+        <Account />
     );
 }
  

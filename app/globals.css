@@ -10,6 +10,10 @@ body,
   -webkit-font-smoothing: antialiased;
 }
 
+body {
+  background-color: #0E0E0E;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -115,30 +119,6 @@ body,
   );
 }
 
-.cl-internal-b3fm6y {
-  display: none;
-}
-
-.cl-internal-uyu30o {
-  display: none;
-}
-
-.cl-headerTitle {
-  margin: 0 auto;
-}
-
-.cl-headerSubtitle {
-  display: none;
-}
-
-.cl-formFieldLabelRow {
-  opacity: 0;
-}
-
-.cl-formFieldInput__emailAddress:-webkit-input-placeholder::before {
-  content: "Email";
-}
-
 .auth-overlay {
   width: 100vw;
   height: 100vh;
@@ -154,11 +134,36 @@ body,
   backdrop-filter: blur(4px);
 }
 
-.cl-headerTitle {
-  content: "Sign Up";
+.cl-profileSectionPrimaryButton__emailAddresses, .cl-badge, .cl-profileSectionPrimaryButton__password {
+ color: hsl(353, 100%, 48%) !important;
 }
 
-input:-webkit-autofill {
-  -webkit-text-fill-color: #e2e2e2 !important;
-  -webkit-box-shadow: 0 5px 90px 90px #191919 inset !important;
+.cl-badge {
+  background-color: hsla(353, 100%, 48%, 0.2) !important;
+}
+
+.order-1 {
+  order: 1;
+}
+.order-2 {
+  order: 2;
+}
+.order-3 {
+  order: 3;
+}
+.order-4 {
+  order: 4;
+}
+.order-5 {
+  order: 5;
+}
+
+@media (min-width: 768px) {
+  .order-1, .order-2, .order-3, .order-4, .order-5 {
+    order: 0
+  }
+}
+
+.cl-modalBackdrop {
+  width: 100%;
 }

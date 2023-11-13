@@ -46,7 +46,7 @@ export default function SignInForm() {
           duration: 4000,
         });
         await setActive({ session: completeSignIn.createdSessionId });
-        router.push("/customize");
+        router.push("/home");
       }
     } catch (err: any) {
       const response = JSON.stringify(err, null, 2);
