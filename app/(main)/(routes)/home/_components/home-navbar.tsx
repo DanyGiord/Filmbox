@@ -3,7 +3,7 @@
 import { ActionTooltip } from "@/components/action-tooltip";
 import { cn } from "@/lib/utils";
 import { UserButton, useClerk, useUser } from "@clerk/nextjs";
-import { Expand, Menu } from "lucide-react";
+import { ChevronDown, Expand, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from 'next/link';
 import { useState } from "react";
@@ -78,8 +78,8 @@ const HomeNavbar = () => {
           >
             {(user?.firstName !== null || user?.firstName !== undefined) && (
               <>
-                <Expand className="w-2.5 h-2.5 mt-0.5 text-gray group-hover:text-white_text transition hidden md:inline" />
-                <span className="text-gray group-hover:text-white_text transition text-base hidden md:inline">{`${
+                <ChevronDown className="w-4 h-4 mt-0.5 text-white_text/80 group-hover:text-white_text transition hidden md:inline" />
+                <span className="text-white_text/80 group-hover:text-white_text transition text-base hidden md:inline">{`${
                   user?.firstName
                 } ${(user?.lastName !== null || user?.lastName !== undefined) ? user?.lastName : ""}`}</span>
               </>

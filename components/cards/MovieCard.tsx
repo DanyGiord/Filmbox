@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import * as Icons from "@/public/assets/icons/Icons";
 
-const API_KEY = `9d78c82d3f773f4e170f920a4e336601`;
-const API_IMG = `https://image.tmdb.org/t/p/w500`;
+const API_KEY = `9d78c82d3f773f4e170f920a4e336601`; //env
+const API_IMG = `https://image.tmdb.org/t/p/w500`; //env
 const moviesPerPage = 8;
 
 const MovieCard = () => {
