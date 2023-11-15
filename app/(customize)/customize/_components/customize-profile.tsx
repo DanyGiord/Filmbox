@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import MovieCard from "@/components/cards/MovieCard";
 import { Input } from "@/components/ui/input";

@@ -1,33 +1,29 @@
 "use client";
-
+import { getDiscoverMovies } from "@/app/api/api";
+import * as Icons from "@/public/assets/icons/Icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import * as Icons from "@/public/assets/icons/Icons";
 
-const API_KEY = `9d78c82d3f773f4e170f920a4e336601`; //env
-const API_IMG = `https://image.tmdb.org/t/p/w500`; //env
 const moviesPerPage = 8;
+const API_IMG = `https://image.tmdb.org/t/p/w500`;
 
 const MovieCard = () => {
   const [movieList, setMovieList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMovies, setSelectedMovies] = useState([]);
 
-  const getMovies = (page) => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&page=${page}`
-    )
-      .then((res) => res.json())
-      .then((json) => setMovieList(json.results));
+  const fetchMovies = async () => {
+    const movies = await getDiscoverMovies(currentPage);
+    setMovieList(movies);
   };
 
   useEffect(() => {
-    getMovies(currentPage);
+    fetchMovies();
   }, [currentPage]);
 
   const totalPages = Math.ceil(movieList.length / moviesPerPage);
 
-  const handlePagination = (page) => {
+  const handlePagination = (page: any) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
@@ -65,7 +61,7 @@ const MovieCard = () => {
   );
 
   return (
-    <div className="flex flex-wrap justify-center pt-8">
+    <div className="flex flex-wrap justify-center pt-8 w-2/4">
       {visibleMovies.map((movie) => (
         <div
           key={movie.id}
@@ -94,8 +90,6 @@ const MovieCard = () => {
           </div>
         </div>
       ))}
-
-      {/* Pagination Dots */}
       <div className="flex justify-center w-full mt-4">
         {generatePaginationDots()}
       </div>
