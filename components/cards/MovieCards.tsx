@@ -1,20 +1,25 @@
 "use client";
-import { getDiscoverMovies } from "@/app/api/api";
+import { searchMovies } from "@/tmdb-api/api";
 import * as Icons from "@/public/assets/icons/Icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const moviesPerPage = 8;
-const API_IMG = `https://image.tmdb.org/t/p/w500`;
+const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
-const MovieCard = () => {
+interface MovieCardsProps {
+  query: string
+}
+
+const MovieCards = ({ query }: MovieCardsProps) => {
   const [movieList, setMovieList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMovies, setSelectedMovies] = useState([]);
+  const [visibleMovies, setVisibleMovies] = useState([]);
 
   const fetchMovies = async () => {
-    const movies = await getDiscoverMovies(currentPage);
-    setMovieList(movies);
+    searchMovies(query)
+      .then((movies) => setMovieList(movies));
   };
 
   useEffect(() => {
@@ -37,8 +42,8 @@ const MovieCard = () => {
           key={i}
           onClick={() => handlePagination(i)}
           className={`${
-            i === currentPage ? "bg-red" : "bg-transparent"
-          } rounded-full ml-5`}
+            i === currentPage ? "bg-red w-[40px]" : "bg-transparent"
+          } rounded-full ml-5 transition-all`}
         >
           <Image src={Icons.Dot} alt="dots" width={14} height={14} />
         </button>
@@ -47,22 +52,31 @@ const MovieCard = () => {
     return dots;
   };
 
-  const handleMovieClick = (movieId) => {
-    if (selectedMovies.includes(movieId)) {
-      setSelectedMovies(selectedMovies.filter((id) => id !== movieId));
-    } else {
-      setSelectedMovies([...selectedMovies, movieId]);
-    }
+  const handleMovieClick = (movieId: never) => {
+      if (selectedMovies.includes(movieId) && selectedMovies.length <= 3) {
+        setSelectedMovies(selectedMovies.filter((id) => id !== movieId));
+      } else if((selectedMovies.length < 3 || selectedMovies.length < 3) && !selectedMovies.includes(movieId)) {
+        setSelectedMovies([...selectedMovies, movieId]);
+      }
   };
 
-  const visibleMovies = movieList.slice(
-    (currentPage - 1) * moviesPerPage,
-    currentPage * moviesPerPage
-  );
+  useEffect(() => {
+    const sliceMovies = movieList.slice(
+      (currentPage - 1) * moviesPerPage,
+      currentPage * moviesPerPage
+    );
+
+    setVisibleMovies(sliceMovies)
+  }, [movieList])
+
+  useEffect(() => {
+    console.log(selectedMovies.length);
+    
+  }, [selectedMovies])
 
   return (
-    <div className="flex flex-wrap justify-center pt-8 w-2/4">
-      {visibleMovies.map((movie) => (
+    <div className="grid grid-cols-2 lg:grid-cols-4 pt-8">
+      {movieList?.map((movie) => (
         <div
           key={movie.id}
           className="flex justify-center px-2 py-2 relative items-center"
@@ -76,7 +90,7 @@ const MovieCard = () => {
             onClick={() => handleMovieClick(movie.id)}
           >
             <Image
-              src={API_IMG + movie.poster_path}
+              src={TMDB_API_IMG + movie.poster_path}
               alt={movie.title}
               width={192}
               height={252}
@@ -97,4 +111,4 @@ const MovieCard = () => {
   );
 };
 
-export default MovieCard;
+export default MovieCards;
