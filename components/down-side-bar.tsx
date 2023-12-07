@@ -56,16 +56,16 @@ const DownSideBar = () => {
       
     // </div>
     <aside className="
-    w-full h-20 fixed bottom-0 left-0 right-0 flex flex-row
-    md:w-20 md:h-full md:top-0 rounded-t-3xl md:rounded-r-3xl bg-black_second md:flex-col
+    w-full h-20 fixed bottom-0 left-0 right-0 flex flex-row rounded-t-3xl bg-black_second
+    md:w-20 md:h-full md:top-0 md:rounded-tl-none md:rounded-r-3xl md:flex-col
     "
     >
       <Link href='/home' className="hidden absolute top-7 left-[25px] right-1 justify-center w-7 h-7 md:flex">
         <Image src="/assets/mini_logo.svg" alt="logo" width={28} height={28} />
       </Link>
       <div className="
-      w-full h-full flex flex-row items-center justify-center gap-x-4 gap-y-10 pr-1
-      md:flex-col
+      w-full h-full flex flex-row items-center justify-evenly gap-x-4 gap-y-10 pr-1
+      md:flex-col md:justify-center
       "
       >
         {routes.map((route) => (

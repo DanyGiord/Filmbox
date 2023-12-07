@@ -167,3 +167,129 @@ body {
 .cl-modalBackdrop {
   width: 100%;
 }
+
+.krug {
+  animation: skok 0.5s ease-in infinite;
+}
+
+@keyframes skok {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.krug:nth-of-type(2) {
+  animation-delay: 0.4s;
+}
+
+.krug:nth-of-type(3) {
+  animation-delay: 0.3s;
+}
+
+.rating {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 95%;
+  overflow: visible;
+  height: 2px; /* Prilagodite visinu trake */
+  border-radius: 4px; /* Zaobljenost trake */
+  background: #565656; /* Siva pozadina za neodabrane delove trake */
+  outline: none;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.rating::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px; /* Širina klizača */
+  height: 10px; /* Visina klizača */
+  border-radius: 50%; /* Da bi klizač bio kružan */
+  background: #F3001D; /* Bela boja klizača */
+  cursor: pointer;
+  outline: 4px solid rgba(245, 0, 29, .31);
+}
+
+.rating::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  outline: 4px solid rgba(245, 0, 29, .31);
+  border-radius: 50%;
+  background: #F3001D;
+  cursor: pointer;
+}
+
+.rating::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  animation-duration: 0.2s;
+  background: #565656;
+  border-radius: 4px;
+}
+
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px; 
+}
+
+.custom-checkbox .genre {
+  display: none;
+}
+
+.custom-checkbox .checkbox-label {
+  padding-left: 24px; 
+  position: relative;
+  cursor: pointer;
+  color: #565656;
+}
+
+.custom-checkbox .checkbox-label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #565656; 
+  background-color: transparent; 
+  border-radius: 3px; 
+}
+
+.custom-checkbox .genre:checked + .checkbox-label::before {
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.2857 6.85714L10 17.1429L4.71429 11.8571" stroke="red" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+  background-position: calc(87.5% - 1.5px) center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  border-color: #f3001d; 
+}
+
+/* Dodajte ove stilove u vaš CSS fajl */
+.sort-radio:checked + .sort-label {
+  /* Stilovi za label kada je sort-radio dugme odabrano */
+  color: white;
+}
+
+.sort-radio:checked {
+  /* Stilovi za sort-radio dugme kada je odabrano */
+  border-color: #ef4444; /* Crvena boja za border */
+  background-color: #ef4444; /* Crvena pozadina */
+}
+
+.sort-radio:checked::after {
+  /* Stilovi za unutrašnji kružić */
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 4px;
+  border-radius: 50%;
+  background: white;
+}
