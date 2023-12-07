@@ -12,8 +12,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 const ResetPasswordForm: NextPage = () => {
-
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
@@ -154,7 +152,7 @@ const ResetPasswordForm: NextPage = () => {
             <Button
               type="submit"
               variant="skew"
-              className="mx-auto  disabled:opacity-50 disabled:cursor-progress"
+              className="mx-auto disabled:opacity-50 disabled:cursor-progress"
               disabled={isLoading}
             >
               {isLoading ? (

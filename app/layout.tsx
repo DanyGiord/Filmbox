@@ -2,8 +2,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
-import { ToasterProvider } from "@/providers/toast-provider";
+import { ToasterProvider } from "@/components/providers/toast-provider";
 import "./globals.css";
+import { ConvexClientProvider } from "@/components/providers/convex-provider";
 
 const lexend = Lexend_Deca({
   subsets: ["latin"],
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/favicon.ico",
-        href: "/favicon.ico",
+        url: "/logo.svg",
+        href: "/logo.svg",
       },
     ],
   },
@@ -29,17 +30,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-      }}
-    >
+    <ConvexClientProvider>
       <html lang="en">
         <body className={lexend.className}>
           <ToasterProvider />
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </ConvexClientProvider>
   );
 }

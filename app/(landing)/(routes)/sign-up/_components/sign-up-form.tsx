@@ -5,18 +5,25 @@ import { Input } from "@/components/ui/input";
 import { useSignUp } from "@clerk/nextjs";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useAuth } from "@clerk/nextjs";
+import axios from 'axios';
+import { currentUser } from "@clerk/nextjs";
 
 export default function SignUpForm() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [verifying, setVerifying] = useState(false);
   const [code, setCode] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { getToken } = useAuth();
 
   const router = useRouter();
 
@@ -31,6 +38,31 @@ export default function SignUpForm() {
     return hashedEmail;
   };
 
+  // async function handleSubmitDB(email: string , firstName: string, lastName: string) {
+  //   try {
+  //     await fetch('/api/profile', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${await getToken()}`
+  //       },
+  //       body: JSON.stringify({
+  //         email,
+  //         firstName,
+  //         lastName,
+  //       }),
+  //     }).then((result) => console.log(result));
+
+  //     console.log();
+      
+      
+  //     toast.success("GJ")
+  //   } catch (error) {
+  //     console.error('Error sending profile to backend:', error);
+  //     // Obradite grešku
+  //     toast.error("GG")
+  //   }
+  // }
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!isLoaded) return;
@@ -41,6 +73,8 @@ export default function SignUpForm() {
       await signUp.create({
         emailAddress,
         password,
+        firstName: name,
+        lastName: surname,
       });
 
       await signUp.prepareEmailAddressVerification({
@@ -98,6 +132,9 @@ export default function SignUpForm() {
       }
 
       if (completeSignUp.status === "complete") {
+        router.push("/customize");
+
+        await setActive({ session: completeSignUp.createdSessionId });
         toast.success("Your account has been verified successfully", {
           style: {
             background: "#1a1a1a",
@@ -107,9 +144,6 @@ export default function SignUpForm() {
           position: "bottom-center",
           duration: 5000
         });
-
-        await setActive({ session: completeSignUp.createdSessionId });
-        router.push("/customize");
       }
     } catch (err: any) {
       const response = JSON.stringify(err, null, 2);
@@ -130,6 +164,7 @@ export default function SignUpForm() {
       console.error("Error:", JSON.stringify(err, null, 2));
     } finally {
       setIsLoading(false);
+
     }
   };
 
@@ -168,6 +203,30 @@ export default function SignUpForm() {
       <form onSubmit={handleSubmit} className="flex flex-col justify-center">
         <div>
           <Input
+            placeholder="First Name"
+            id="name"
+            type="text"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={isLoading}
+            className="mb-4"
+          />
+        </div>
+        <div>
+          <Input
+            placeholder="Last Name"
+            id="surname"
+            type="text"
+            name="surname"
+            value={surname}
+            onChange={(e) => setSurname(e.target.value)}
+            disabled={isLoading}
+            className="mb-4"
+          />
+        </div>
+        <div>
+          <Input
             placeholder="Email Address"
             id="email"
             type="email"
@@ -175,7 +234,7 @@ export default function SignUpForm() {
             value={emailAddress}
             onChange={(e) => setEmailAddress(e.target.value)}
             disabled={isLoading}
-            className="mb-6"
+            className="mb-4"
           />
         </div>
         <div>
