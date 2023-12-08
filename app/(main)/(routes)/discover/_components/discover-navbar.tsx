@@ -1,6 +1,8 @@
 'use client'
 
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
+import DiscoverContext from "../_context/discover-context";
+
 import * as Icons from "@/public/assets/icons/Icons";
 
 import { Input } from "@/components/ui/input";
@@ -13,16 +15,12 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-interface DiscoverNavbarProps {
-    query: string;
-    setQuery: Dispatch<SetStateAction<string>>;
-    searchFor: string;
-    setSearchFor: Dispatch<SetStateAction<string>>;
-}
+const DiscoverNavbar = () => {
+    // @ts-ignore
+    const { query, setQuery, searchFor, setSearchFor } = useContext(DiscoverContext);
 
-const DiscoverNavbar = ({ query, setQuery, searchFor, setSearchFor }: DiscoverNavbarProps) => {
     return (
-        <div className="mb-7 flex justify-between">
+        <div className="mb-7 flex justify-between sticky top-5 z-[9999]">
             <div className="w-[440px]">
                 <Input
                     onChange={(e) => setQuery(e.target.value)}

@@ -1,9 +1,7 @@
 import Discover from "./_components/discover";
     
 const DiscoverPage = () => {
-    return (
-        <Discover />
-    );
+    return <Discover />;
 }
  
 export default DiscoverPage;

@@ -11,7 +11,7 @@ body,
 }
 
 body {
-  background-color: #0E0E0E;
+  background-color: #0e0e0e;
 }
 
 @layer base {
@@ -134,8 +134,10 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.cl-profileSectionPrimaryButton__emailAddresses, .cl-badge, .cl-profileSectionPrimaryButton__password {
- color: hsl(353, 100%, 48%) !important;
+.cl-profileSectionPrimaryButton__emailAddresses,
+.cl-badge,
+.cl-profileSectionPrimaryButton__password {
+  color: hsl(353, 100%, 48%) !important;
 }
 
 .cl-badge {
@@ -159,8 +161,12 @@ body {
 }
 
 @media (min-width: 768px) {
-  .order-1, .order-2, .order-3, .order-4, .order-5 {
-    order: 0
+  .order-1,
+  .order-2,
+  .order-3,
+  .order-4,
+  .order-5 {
+    order: 0;
   }
 }
 
@@ -209,17 +215,17 @@ body {
   width: 10px; /* Širina klizača */
   height: 10px; /* Visina klizača */
   border-radius: 50%; /* Da bi klizač bio kružan */
-  background: #F3001D; /* Bela boja klizača */
+  background: #f3001d; /* Bela boja klizača */
   cursor: pointer;
-  outline: 4px solid rgba(245, 0, 29, .31);
+  outline: 4px solid rgba(245, 0, 29, 0.31);
 }
 
 .rating::-moz-range-thumb {
   width: 10px;
   height: 10px;
-  outline: 4px solid rgba(245, 0, 29, .31);
+  outline: 4px solid rgba(245, 0, 29, 0.31);
   border-radius: 50%;
-  background: #F3001D;
+  background: #f3001d;
   cursor: pointer;
 }
 
@@ -232,11 +238,10 @@ body {
   border-radius: 4px;
 }
 
-
 .custom-checkbox {
   display: flex;
   align-items: center;
-  margin-bottom: 6px; 
+  margin-bottom: 6px;
 }
 
 .custom-checkbox .genre {
@@ -244,23 +249,23 @@ body {
 }
 
 .custom-checkbox .checkbox-label {
-  padding-left: 24px; 
+  padding-left: 24px;
   position: relative;
   cursor: pointer;
   color: #565656;
 }
 
 .custom-checkbox .checkbox-label::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
   width: 16px;
   height: 16px;
-  border: 2px solid #565656; 
-  background-color: transparent; 
-  border-radius: 3px; 
+  border: 2px solid #565656;
+  background-color: transparent;
+  border-radius: 3px;
 }
 
 .custom-checkbox .genre:checked + .checkbox-label::before {
@@ -268,28 +273,37 @@ body {
   background-position: calc(87.5% - 1.5px) center;
   background-repeat: no-repeat;
   background-size: 80%;
-  border-color: #f3001d; 
+  border-color: #f3001d;
 }
 
-/* Dodajte ove stilove u vaš CSS fajl */
-.sort-radio:checked + .sort-label {
-  /* Stilovi za label kada je sort-radio dugme odabrano */
-  color: white;
+.current-page {
+  -webkit-box-shadow: 0px 5px 30px 0.5px rgba(243, 0, 29, 1);
+  -moz-box-shadow: 0px 5px 30px 0.5px rgba(243, 0, 29, 1);
+  box-shadow: 0px 5px 30px 0.5px rgba(243, 0, 29, 1);
+  animation: slide 0.5s forwards;
+
+}
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: 200%;
+  }
+  100% {
+    background-position: -200%;
+  }
 }
 
-.sort-radio:checked {
-  /* Stilovi za sort-radio dugme kada je odabrano */
-  border-color: #ef4444; /* Crvena boja za border */
-  background-color: #ef4444; /* Crvena pozadina */
-}
-
-.sort-radio:checked::after {
-  /* Stilovi za unutrašnji kružić */
-  content: "";
-  display: block;
-  width: 8px;
-  height: 8px;
-  margin: 4px;
-  border-radius: 50%;
-  background: white;
+.animate-pulse {
+  animation: shimmer 2s ease-in-out infinite;
+  background: linear-gradient(to right, #374151 8%, #1f2937 30%, #374151 60%);
+  background-size: 200% 100%;
 }
