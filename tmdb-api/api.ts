@@ -37,6 +37,14 @@ export const searchSeries = async (query: string) => {
     .then((json) => json.results);
 };
 
+export const discoverSearch = async (searchFor: string, query: string = 'Batman') => {
+  return fetch(
+    `${TMDB_API_BASE_URL}/search/${searchFor}?api_key=${TMDB_API_KEY}&include_adult=false&query=${query}`
+  )
+    .then((res) => res.json())
+    .then((json) => json.results);
+}
+
 export const searchActors = async (query: string) => {
   if (query.length === 0) {
     return fetch(
@@ -108,7 +116,7 @@ export const fetchDiscover = async (
       headers: {
         accept: "application/json",
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ZGM4ZGE5OTUwMTkxMTIzZmUwYTcwNjk2NmI4NjhiYiIsInN1YiI6IjYyZmE4NjMyMTc1MDUxMDA3YzU5YTAxYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ox7bB_z8FJXtVqPr3DWEaDFigc6da4DyvILQ2_qn6ok",
+          `${process.env.NEXT_PUBLIC_TMDB_API_BEARER}`,
       },
     }
   ).then((res) => res.json());

@@ -307,3 +307,7 @@ body {
   background: linear-gradient(to right, #374151 8%, #1f2937 30%, #374151 60%);
   background-size: 200% 100%;
 }
+
+.discover-search-overlay {
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.75)
+}

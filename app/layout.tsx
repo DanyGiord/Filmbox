@@ -5,7 +5,6 @@ import { Lexend_Deca } from "next/font/google";
 import { ToasterProvider } from "@/components/providers/toast-provider";
 import "./globals.css";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
-import DiscoverContextProvider from "./(main)/(routes)/discover/_context/discover-context-provider";
 
 const lexend = Lexend_Deca({
   subsets: ["latin"],
@@ -32,14 +31,12 @@ export default function RootLayout({
 }) {
   return (
     <ConvexClientProvider>
-      <DiscoverContextProvider>
         <html lang="en">
           <body className={lexend.className}>
             <ToasterProvider />
             {children}
           </body>
         </html>
-      </DiscoverContextProvider>
     </ConvexClientProvider>
   );
 }

@@ -15,8 +15,8 @@ const DiscoverNew = () => {
     const { searchFor } = useContext(DiscoverContext);
 
     const [latest, setLatest] = useState<never[]>([]);
-    const [genres, setGenres] = useState<any[]>([]);
     const [skeleton, setSkeleton] = useState(true)
+    const [genres, setGenres] = useState<any[]>([]);
 
     useEffect(() => {
         const getGenres = async () => {
