@@ -107,7 +107,7 @@ const DiscoverNavbar = () => {
                                                 {/* @ts-ignore */}
                                                 {searchFor === 'tv' && (single?.name?.length > 15 ? single?.overview?.substring(0, 60) + '...' : single?.overview?.substring(0, 80) + '...')}
                                             </div>
-                                            <Button variant="skew_gray" className="w-10/12 mx-auto my-0">
+                                            <Button variant="skew" className="w-10/12 mx-auto my-0">
                                                 Watch Now
                                             </Button>
                                         </div>

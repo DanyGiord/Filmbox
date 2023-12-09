@@ -49,7 +49,7 @@ const DiscoverNew = () => {
                     {latest.map((single) => (
                         <>
                             {skeleton ? (
-                                <div className="w-96 h-60 p-4 flex gap-x-3 bg-black-900 rounded-3xl">
+                                <div className="w-96 h-60 p-4 flex gap-x-3 bg-input_bg rounded-3xl">
                                     <div className="w-36 h-full bg-black-800 rounded-xl animate-pulse"></div>
                                     <div className="flex-1 space-y-4 py-1">
                                         <div className="h-5 bg-black-800 rounded animate-pulse"></div>
@@ -101,7 +101,6 @@ const DiscoverNew = () => {
                                         </div>
                                     </div>
                                 </div>
-
                             )}
                         </>
                     ))}
