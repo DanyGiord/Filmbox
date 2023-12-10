@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Plus, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ActionTooltip } from "@/components/action-tooltip";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -16,7 +17,7 @@ const DiscoverCards = () => {
     const { currentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages } = useContext(DiscoverContext);
 
     const [cards, setCards] = useState([]);
-    const [skeleton, setSkeleton] = useState(true)
+    const [skeleton, setSkeleton] = useState(true);
 
     useEffect(() => {
         const getLatest = async () => {
@@ -52,7 +53,9 @@ const DiscoverCards = () => {
                     <div
                         // @ts-ignore
                         key={card.id}
-                        className="relative flex justify-center w-full h-[350px] px-2 py-2 items-center"
+                        className={cn(
+                            "relative flex justify-center w-full h-[350px] px-2 py-2 items-center",
+                        )}
                     >
                         {skeleton && <div className="animate-pulse w-full h-full rounded-2xl absolute inset-0 z-[9999]"></div>}
                         <div
@@ -83,12 +86,14 @@ const DiscoverCards = () => {
                                 />
                             )}
                             <div className={cn(
-                                `absolute inset-0 p-3 w-full h-full flex flex-col justify-between rounded-2xl card_main group hover:backdrop-blur-sm overflow-hidden transition-all`
+                                `absolute inset-0 p-3 w-full h-full flex flex-col justify-between rounded-2xl card_main group hover:backdrop-blur-md overflow-hidden transition-all`
                             )}>
                                 <div className="flex justify-end">
-                                    <button className="w-9 h-7 grid place-items-center rounded-full bg-black_third">
-                                        <Plus className="w-3 h-3 text-white_text" />
-                                    </button>
+                                    <ActionTooltip side="left" align="center" label="Create session">
+                                        <button className="w-9 h-7 grid place-items-center rounded-full bg-black_third">
+                                            <Plus className="w-3 h-3 text-white_text" />
+                                        </button>
+                                    </ActionTooltip>
                                 </div>
                                 <div className="flex flex-col gap-y-2">
                                     <div className="flex justify-between translate-y-44 group-hover:translate-y-0 duration-300">
@@ -110,6 +115,7 @@ const DiscoverCards = () => {
                                         {/* @ts-ignore */}
                                         {card?.overview?.split(' ').slice(0, 15).join(' ') + '...'}
                                     </p>
+                                    {/* @ts-ignore */}
                                     <Button variant='skew' className="mt-0 w-11/12 translate-y-24 opacity-0 group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300">
                                         Watch Now
                                     </Button>

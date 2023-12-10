@@ -17,7 +17,9 @@ import {
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { discoverSearch, fetchGenres } from "@/tmdb-api/api";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { Plus, Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { ActionTooltip } from "@/components/action-tooltip";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -28,6 +30,8 @@ const DiscoverNavbar = () => {
     const [searchItems, setSearchItems] = useState([]);
     const [showSearch, setShowSearch] = useState(false);
     const [skeleton, setSkeleton] = useState(true);
+    const [mouseOver, setMouseOver] = useState(false);
+    
 
     useEffect(() => {
         const getGenres = async () => {
@@ -54,18 +58,33 @@ const DiscoverNavbar = () => {
 
     return (
         <div className="mb-7 flex justify-between max-h-[48px] overflow-visible sticky top-5 z-[9999]">
-            <div className="w-[440px] relative">
+            <div className={cn(
+                "w-[440px] relative transition-all duration-500",
+                showSearch && "w-[660px]"
+            )}>
                 <Input
                     onChange={(e) => setQuery(e.target.value)}
+                    onMouseOver={() => setMouseOver(true)}
+                    onMouseLeave={() => setMouseOver(false)}
                     placeholder="Search"
                     iconSrc={Icons.Search}
                     value={query}
-                    className="h-12"
-                    onFocus={() => setShowSearch(true)}
+                    className={cn(
+                        "h-12",
+                        showSearch && query.length > 0 && "rounded-b-none"
+                    )}
+                    onFocus={() => {
+                        setShowSearch(true);
+                        setSkeleton(true)
+                    }}
                     onBlur={() => setShowSearch(false)}
                 />
                 {showSearch && query.length > 0 && (
-                    <ScrollArea className="w-[150%] bg-black_second absolute h-[510px] inset-0 top-1 rounded-3xl text-white p-4">
+                    <ScrollArea onMouseOver={() => setMouseOver(true)} onMouseLeave={() => setMouseOver(false)} className={cn(
+                        "bg-black_second absolute h-0 inset-0 border-t-2 border-gray/25 rounded-b-3xl text-white p-4 transition-all",
+                        !mouseOver && 'opacity-30',
+                        query.length > 0 && "h-[530px]"
+                        )}>
                         {searchItems.map(single => (
                             <>
                                 {skeleton ? (
@@ -86,7 +105,7 @@ const DiscoverNavbar = () => {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="bg-black_second hover:bg-black_third transition-all relative rounded-xl w-full h-60 p-4 flex gap-x-3 my-2">
+                                    <div className="bg-black_second group hover:bg-black_third transition-all relative rounded-xl w-full h-60 p-4 flex gap-x-3 my-2">
                                         <div className="discover-search-overlay absolute inset-0 -z-10"></div>
                                         {/* @ts-ignore */}
                                         <img src={TMDB_API_IMG + single?.poster_path} alt="" className="w-36 h-full rounded-xl object-cover" />
@@ -107,9 +126,16 @@ const DiscoverNavbar = () => {
                                                 {/* @ts-ignore */}
                                                 {searchFor === 'tv' && (single?.name?.length > 15 ? single?.overview?.substring(0, 60) + '...' : single?.overview?.substring(0, 80) + '...')}
                                             </div>
-                                            <Button variant="skew" className="w-10/12 mx-auto my-0">
-                                                Watch Now
-                                            </Button>
+                                            <div className="flex gap-x-1.5">
+                                                <Button variant="skew" className="w-10/12 my-0">
+                                                    Watch Now
+                                                </Button>
+                                                <ActionTooltip side="top" align="center" label="Create session">
+                                                    <Button variant="skew_gray" className="w-2/12 group-hover:bg-black_second mt-0 grid place-items-center bg-black_third">
+                                                        <Plus className="w-3 h-3 text-white_text" />
+                                                    </Button>
+                                                </ActionTooltip>
+                                            </div>
                                         </div>
                                     </div>)}
                             </>

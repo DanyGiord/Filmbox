@@ -16,7 +16,7 @@ import {
       label,
       children,
       side,
-      align
+      align,
   }: ActionTooltipProps) => {
       return (
           <TooltipProvider>

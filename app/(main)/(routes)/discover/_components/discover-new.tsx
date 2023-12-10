@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { fetchGenres, fetchLatest } from "@/tmdb-api/api";
-import { Star, StarHalf } from "lucide-react";
+import { Plus, Star, StarHalf } from "lucide-react";
 
 import { useEffect, useState, useContext } from "react";
 import DiscoverContext from "../_context/discover-context";
+import { ActionTooltip } from "@/components/action-tooltip";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -67,7 +68,7 @@ const DiscoverNew = () => {
                                 </div>
                             ) : (
                                 <div>
-                                    <div className="bg-input_bg rounded-3xl w-96 h-60 p-4 flex gap-x-3">
+                                    <div className="bg-input_bg hover:bg-black_third transition-all rounded-3xl w-96 h-60 p-4 flex gap-x-3">
                                         {/* @ts-ignore */}
                                         <img src={TMDB_API_IMG + single?.poster_path} alt="" className="w-36 h-full rounded-xl object-cover" />
                                         <div className="flex flex-col justify-between">
@@ -95,9 +96,16 @@ const DiscoverNew = () => {
                                                 {/* @ts-ignore */}
                                                 {searchFor === 'tv' && (single?.name?.length > 15 ? single?.overview?.substring(0, 60) + '...' : single?.overview?.substring(0, 80) + '...')}
                                             </div>
-                                            <Button variant="skew_gray" className="w-full my-0">
-                                                Watch Now
-                                            </Button>
+                                            <div className="flex flex-row-reverse gap-x-1.5">
+                                                <Button variant="skew_gray" className="w-10/12 my-0">
+                                                    Watch Now
+                                                </Button>
+                                                <ActionTooltip side="top" align="center" label="Create session">
+                                                    <Button variant="skew" className="w-2/12 mt-0 grid place-items-center bg-black_third">
+                                                        <Plus className="w-3 h-3 text-white_text" />
+                                                    </Button>
+                                                </ActionTooltip>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
