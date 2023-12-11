@@ -31,12 +31,12 @@ export default function RootLayout({
 }) {
   return (
     <ConvexClientProvider>
-      <html lang="en">
-        <body className={lexend.className}>
-          <ToasterProvider />
-          {children}
-        </body>
-      </html>
+        <html lang="en">
+          <body className={lexend.className}>
+            <ToasterProvider />
+            {children}
+          </body>
+        </html>
     </ConvexClientProvider>
   );
 }

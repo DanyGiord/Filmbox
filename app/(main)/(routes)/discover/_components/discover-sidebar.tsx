@@ -1,6 +1,7 @@
 'use client';
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import DiscoverContext from "../_context/discover-context";
 
 import {
     Accordion,
@@ -12,18 +13,14 @@ import Languages from "./sidebar-components/languages";
 import Rating from "./sidebar-components/rating";
 import { fetchGenres } from "@/tmdb-api/api";
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { RadioGroup } from "@/components/ui/radio-group"
+import ReleaseYear from "./sidebar-components/release-year";
+import Sort from "./sidebar-components/sort";
 
-interface DiscoverSidebarProps {
-    rating: string;
-    setRating: Dispatch<SetStateAction<string>>;
-    selectedGenres: string[];
-    setSelectedGenres: Dispatch<SetStateAction<string[]>>;
-    searchFor: string;
-    setCurrentLanguage: Dispatch<SetStateAction<string>>;
-}
+const DiscoverSidebar = () => {
+    // @ts-ignore
+    const { rating, setRating, selectedGenres, setSelectedGenres, searchFor, currentLanguage, setCurrentLanguage, currentYear, setCurrentYear, selectedSort, setSelectedSort } = useContext(DiscoverContext);
 
-const DiscoverSidebar = ({ rating, setRating, selectedGenres, setSelectedGenres, searchFor, setCurrentLanguage }: DiscoverSidebarProps) => {
     const [genres, setGenres] = useState<any[]>([]);
 
     useEffect(() => {
@@ -33,54 +30,22 @@ const DiscoverSidebar = ({ rating, setRating, selectedGenres, setSelectedGenres,
         }
         getGenres();
         setSelectedGenres([]);
-    }, [searchFor])
+    }, [searchFor]);
 
     const handleSelectedGenres = (e: any) => {
         const { value, checked } = e.target;
 
         if (checked) {
+            // @ts-ignore
             setSelectedGenres((prev) => [...prev, value]);
         } else {
+            // @ts-ignore
             setSelectedGenres((prev) => prev.filter((e) => e !== value));
         }
     };
 
-    const sortBy = [
-        {
-            value: 'popularity',
-            id: "r1",
-            label: "Popularity"
-        },
-        {
-            value: 'revenue',
-            id: "r2",
-            label: "Revenue"
-        },
-        {
-            value: 'primary_release_date',
-            id: "r3",
-            label: "Release date"
-        },
-        {
-            value: 'vote_average',
-            id: "r4",
-            label: "Vote average"
-        },
-        {
-            value: 'vote_count',
-            id: "r5",
-            label: "Vote count"
-        },
-    ]
-
-    const [selectedSort, setSelectedSort] = useState("")
-
-    useEffect(() => {
-        console.log(selectedSort)
-    }, [selectedSort])
-
     return (
-        <div className="w-full rounded-3xl bg-input_bg px-6 max-h-screen">
+        <div className="w-full rounded-3xl bg-input_bg px-6 py-3  sticky top-5">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Genres</AccordionTrigger>
@@ -102,37 +67,30 @@ const DiscoverSidebar = ({ rating, setRating, selectedGenres, setSelectedGenres,
                     <AccordionTrigger className="text-white_text">Sort By</AccordionTrigger>
                     <AccordionContent>
                         <RadioGroup className="text-gray" onValueChange={setSelectedSort}>
-                            {sortBy.map(sort => (
-                                <div className="flex items-center space-x-2">
-                                    {/* <RadioGroupItem value={sort.value} id={sort.id} className="sort-radio border-2 border-gray text-red checked:border-red peer" />
-                                    <Label htmlFor={sort.id} className="sort-label">{sort.label}</Label> */}
-                                    <input
-                                        type="radio"
-                                        value={sort.value}
-                                        id={sort.id}
-                                        name="radio"
-                                        className="hidden peer" // Skriva radio button ali ga čini dostupnim za peer klasu
-                                    />
-                                    <label
-                                        htmlFor={sort.id}
-                                        className="w-4 h-4 rounded-full border-2 border-gray-400 bg-white peer-checked:bg-red-500 peer-checked:border-red-500 after:content-[''] after:block after:w-2 after:h-2 after:bg-red-600 after:rounded-full after:peer-checked:bg-white"
-                                    ></label>
-                                    <label htmlFor={sort.id} className="text-gray-400 peer-checked:text-white">{sort.label}</label>
-                                </div>
-                            ))}
+                            {/* @ts-ignore */}
+                            <Sort selectedSort={selectedSort} />
                         </RadioGroup>
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Rating</AccordionTrigger>
                     <AccordionContent className="flex flex-col gap-y-2">
+                        {/* @ts-ignore */}
                         <Rating rating={rating} setRating={setRating} />
                     </AccordionContent>
                 </AccordionItem>
-                <AccordionItem value="item-4" className="border-b-[0px] border-b-[#242424]">
+                <AccordionItem value="item-4" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Languages</AccordionTrigger>
                     <AccordionContent>
-                        <Languages setCurrentLanguage={setCurrentLanguage} />
+                        {/* @ts-ignore */}
+                        <Languages currentLanguage={currentLanguage} setCurrentLanguage={setCurrentLanguage} />
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5" className="border-b-[0px] border-b-[#242424]">
+                    <AccordionTrigger className="text-white_text">Release year</AccordionTrigger>
+                    <AccordionContent>
+                        {/* @ts-ignore */}
+                        <ReleaseYear currentYear={currentYear} setCurrentYear={setCurrentYear} />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

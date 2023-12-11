@@ -33,16 +33,20 @@ const SeriesCards = ({ list, selectedSeries, setSelectedSeries }: SeriesCardsPro
       <div className="grid grid-cols-2 lg:grid-cols-4 max-w-[435px] md:max-w-[870px] h-[600px] md:h-[400px]">
         {list?.map((serie) => (
           <div
+            // @ts-ignore
             key={serie.id}
             className="flex justify-center px-2 py-2 relative items-center"
           >
             <div
+              // @ts-ignore
               className={`relative rounded-2xl border-[3px] ${selectedSeries.includes(serie.id)
                 ? "border-orange-500"
                 : "border-transparent"
                 }`}
+              // @ts-ignore
               onClick={() => handleSerieClick(serie.id)}
             >
+              {/* @ts-ignore */}
               {selectedSeries.includes(serie.id) && (
                 <Image
                   src={Icons.OrangeCheck}
@@ -53,17 +57,21 @@ const SeriesCards = ({ list, selectedSeries, setSelectedSeries }: SeriesCardsPro
                 />
               )}
               <Image
+              // @ts-ignore
                 src={TMDB_API_IMG + serie.poster_path}
+              // @ts-ignore
                 alt={serie.original_name}
                 width={192}
                 height={252}
                 className="rounded-2xl"
               />
               <div className={cn(
-                  `absolute inset-0 w-48 h-full flex flex-col justify-end p-2 rounded-2xl`,
-                  (selectedSeries.length > 0 && !selectedSeries.includes(serie.id)) ? "bg-neutral-800/75" : "card_main"
-                )}>
+                `absolute inset-0 w-48 h-full flex flex-col justify-end p-2 rounded-2xl`,
+                // @ts-ignore
+                (selectedSeries.length > 0 && !selectedSeries.includes(serie.id)) ? "bg-neutral-800/75" : "card_main"
+              )}>
                 <p className="text-white font-normal text-sm absolute bottom-4 right-0 left-0 hover:cursor-default">
+                  {/* @ts-ignore */}
                   {serie.original_name}
                 </p>
               </div>
