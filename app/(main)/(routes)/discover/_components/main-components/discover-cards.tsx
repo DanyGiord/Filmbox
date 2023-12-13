@@ -5,16 +5,23 @@ import { useEffect, useState, useContext } from "react";
 import DiscoverContext from "../../_context/discover-context";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Plus, Star } from "lucide-react";
+import { Heart, Plus, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ActionTooltip } from "@/components/action-tooltip";
+import CreateSessionModal from "@/components/modals/create-session-modal";
+import { useUser } from "@clerk/nextjs";
+import { useConvex, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverCards = () => {
     // @ts-ignore
-    const { currentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages } = useContext(DiscoverContext);
+    const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages } = useContext(DiscoverContext);
+
+    const { user } = useUser();
+    const convex = useConvex();
 
     const [cards, setCards] = useState([]);
     const [skeleton, setSkeleton] = useState(true);
@@ -32,15 +39,52 @@ const DiscoverCards = () => {
     }, [currentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor]);
 
     useEffect(() => {
-        console.log(cards);
-        console.log(totalPages);
-    }, [cards, totalPages]);
+        setCurrentPage(1);
+    }, [currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor])
 
     useEffect(() => {
         setTimeout(() => {
             setSkeleton(false)
         }, 2000);
-    }, [skeleton])
+    }, [skeleton]);
+
+    const [favMovieIds, setFavMovieIds] = useState<number[]>([]);
+    const [favSerieIds, setFavSerieIds] = useState<number[]>([]);
+    const addFavMovie = useMutation(api.user.addFavMovie);
+    const removeFavMovie = useMutation(api.user.removeFavMovie);
+
+    useEffect(() => {
+        let ignore = false;
+        if (user) {
+            convex.query(api.user.getUser, { userId: user.id })
+                .then(userData => {
+                    // Obradite podatke korisnika
+                    if (userData && !ignore) {
+                        setFavMovieIds(userData.favMovies)
+                        setFavSerieIds(userData.favSeries);
+                        localStorage.setItem("convexUserId", userData._id);
+                    }
+                })
+                .catch(error => {
+                    // Obradite grešku
+                    console.log(error);
+                });
+        }
+        return () => { ignore = true }
+    }, [user, convex]);
+
+    const addRemoveFavorites = (movieId: number) => {
+        const convexUserId = localStorage.getItem("convexUserId");
+        if(!favMovieIds.includes(movieId)) {
+            // @ts-ignore
+            const promise = addFavMovie({ id: convexUserId, movieId });
+            setFavMovieIds(prev => [ ...prev, movieId]);
+        } else {
+            // @ts-ignore
+            const promise = removeFavMovie({ id: convexUserId, movieId });
+            setFavMovieIds(prev => prev.filter(id => id !== movieId))
+        }
+    }
 
     return (
         <div className="grid grid-cols-5 gap-3 w-full mb-7">
@@ -88,12 +132,24 @@ const DiscoverCards = () => {
                             <div className={cn(
                                 `absolute inset-0 p-3 w-full h-full flex flex-col justify-between rounded-2xl card_main group hover:backdrop-blur-md overflow-hidden transition-all`
                             )}>
-                                <div className="flex justify-end">
-                                    <ActionTooltip side="left" align="center" label="Create session">
-                                        <button className="w-9 h-7 grid place-items-center rounded-full bg-black_third">
-                                            <Plus className="w-3 h-3 text-white_text" />
+                                <div className="flex justify-between">
+                                    <ActionTooltip side="bottom" align="start" label="Add to favorites">
+                                        {/* @ts-ignore */}
+                                        <button onClick={() => addRemoveFavorites(card.id)} className="w-9 h-7 grid place-items-center rounded-full bg-black_third">
+                                            <Heart className={cn(
+                                                "w-4 h-4 text-white_text transition-all",
+                                                // @ts-ignore
+                                                searchFor === 'movie' ? favMovieIds.includes(card.id) && 'text-red fill-red' : favSerieIds.includes(card.id) && 'text-red fill-red'
+                                            )} />
                                         </button>
                                     </ActionTooltip>
+                                    <CreateSessionModal>
+                                        <ActionTooltip side="bottom" align="end" label="Create session">
+                                            <button className="w-9 h-7 grid place-items-center rounded-full bg-black_third">
+                                                <Plus className="w-4 h-4 text-white_text" />
+                                            </button>
+                                        </ActionTooltip>
+                                    </CreateSessionModal>
                                 </div>
                                 <div className="flex flex-col gap-y-2">
                                     <div className="flex justify-between translate-y-44 group-hover:translate-y-0 duration-300">

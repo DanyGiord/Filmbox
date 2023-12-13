@@ -56,7 +56,7 @@ const CustomizeProfile = () => {
       .then((actors: any) => setActors(actors))
   }
 
-  const createProfile = useMutation(api.profile.createProfile);
+  const createProfile = useMutation(api.user.createProfile);
   const { user } = useUser();
 
   const [isProfileCreated, setIsProfileCreated] = useState(false)
@@ -74,7 +74,7 @@ const CustomizeProfile = () => {
         favActors: selectedActors,
       })
       setIsProfileCreated(true);
-      toast.error("Your profile has been customized successfully", {
+      toast.success("Your profile has been customized successfully", {
         style: {
           background: "#1a1a1a",
           color: "#fcfcfc",
@@ -99,7 +99,7 @@ const CustomizeProfile = () => {
   useEffect(() => {
     let ignore = false;
     if (user) {
-      convex.query(api.profile.getUser, { userId: user.id })
+      convex.query(api.user.getUser, { userId: user.id })
         .then(userData => {
           // Obradite podatke korisnika
           if (userData && !ignore) {

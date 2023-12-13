@@ -31,7 +31,7 @@ const DiscoverNavbar = () => {
     const [showSearch, setShowSearch] = useState(false);
     const [skeleton, setSkeleton] = useState(true);
     const [mouseOver, setMouseOver] = useState(false);
-    
+
 
     useEffect(() => {
         const getGenres = async () => {
@@ -84,7 +84,7 @@ const DiscoverNavbar = () => {
                         "bg-black_second absolute h-0 inset-0 border-t-2 border-gray/25 rounded-b-3xl text-white p-4 transition-all",
                         !mouseOver && 'opacity-30',
                         query.length > 0 && "h-[530px]"
-                        )}>
+                    )}>
                         {searchItems.map(single => (
                             <>
                                 {skeleton ? (
@@ -137,7 +137,8 @@ const DiscoverNavbar = () => {
                                                 </ActionTooltip>
                                             </div>
                                         </div>
-                                    </div>)}
+                                    </div>
+                                )}
                             </>
                         ))}
                         <ScrollBar />

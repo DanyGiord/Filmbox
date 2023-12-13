@@ -23,7 +23,7 @@ const Favorites = () => {
     useEffect(() => {
         let ignore = false;
         if (user) {
-            convex.query(api.profile.getUser, { userId: user.id })
+            convex.query(api.user.getUser, { userId: user.id })
                 .then(userData => {
                     // Obradite podatke korisnika
                     if (userData && !ignore) {
@@ -73,10 +73,6 @@ const Favorites = () => {
 
         fetchFavActors(favActorIds);
     }, [favActorIds]);
-
-    useEffect(() => {
-        console.log(favActors);
-    }, [favActors])
 
     if (!isLoaded || !isSignedIn) {
         return null;
