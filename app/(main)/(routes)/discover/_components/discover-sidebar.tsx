@@ -1,22 +1,21 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import DiscoverContext from "../_context/discover-context";
 
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Label } from "@/components/ui/label";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { fetchGenres } from "@/tmdb-api/api";
 import Languages from "./sidebar-components/languages";
 import Rating from "./sidebar-components/rating";
-import { fetchGenres } from "@/tmdb-api/api";
-import { Label } from "@/components/ui/label"
-import { RadioGroup } from "@/components/ui/radio-group"
 import ReleaseYear from "./sidebar-components/release-year";
 import Sort from "./sidebar-components/sort";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const DiscoverSidebar = () => {
     // @ts-ignore
@@ -26,8 +25,8 @@ const DiscoverSidebar = () => {
         setSelectedGenres([]);
     }, [searchFor]);
 
-    const handleSelectedGenres = (e: any) => {
-        const { value, checked } = e.target;
+  const handleSelectedGenres = (e: any) => {
+    const { value, checked } = e.target;
 
         if (checked) {
             // @ts-ignore

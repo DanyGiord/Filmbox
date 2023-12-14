@@ -1,12 +1,11 @@
-'use client'
+"use client";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { fetchGenres, fetchLatest } from "@/tmdb-api/api";
-
-import { useEffect, useState, useContext } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useContext, useEffect, useState } from "react";
 import DiscoverContext from "../../_context/discover-context";
 import SearchNewCard from "../search-new-card";
-
 
 const DiscoverNew = () => {
     // @ts-ignore

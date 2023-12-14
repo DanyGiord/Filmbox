@@ -1,12 +1,14 @@
 "use client";
 
+import Card from "@/components/ui/card";
+import { api } from "@/convex/_generated/api";
 import { fetchDiscover } from "@/tmdb-api/api";
-import { useEffect, useState, useContext } from "react";
-import DiscoverContext from "../../_context/discover-context";
 import { useUser } from "@clerk/nextjs";
 import { useConvex } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import Card from "@/components/ui/card";
+import { AnimatePresence, motion } from "framer-motion";
+import { useContext, useEffect, useState } from "react";
+import DiscoverContext from "../../_context/discover-context";
+import { Variants } from "framer-motion";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -40,28 +42,28 @@ const DiscoverCards = () => {
 
     
 
-    useEffect(() => {
-        let ignore = false;
-        if (user) {
-            convex
-                .query(api.user.getUser, { userId: user.id })
-                .then((userData) => {
-                    // Obradite podatke korisnika
-                    if (userData && !ignore) {
-                        setFavMovieIds(userData.favMovies);
-                        setFavSerieIds(userData.favSeries);
-                        localStorage.setItem("convexUserId", userData._id);
-                    }
-                })
-                .catch((error) => {
-                    // Obradite grešku
-                    console.log(error);
-                });
-        }
-        return () => {
-            ignore = true;
-        };
-    }, [user, convex]);
+  useEffect(() => {
+    let ignore = false;
+    if (user) {
+      convex
+        .query(api.user.getUser, { userId: user.id })
+        .then((userData) => {
+          // Obradite podatke korisnika
+          if (userData && !ignore) {
+            setFavMovieIds(userData.favMovies);
+            setFavSerieIds(userData.favSeries);
+            localStorage.setItem("convexUserId", userData._id);
+          }
+        })
+        .catch((error) => {
+          // Obradite grešku
+          console.log(error);
+        });
+    }
+    return () => {
+      ignore = true;
+    };
+  }, [user, convex]);
 
 
 

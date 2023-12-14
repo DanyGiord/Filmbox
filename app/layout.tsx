@@ -1,10 +1,8 @@
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import { ConvexClientProvider } from "@/components/providers/convex-provider";
+import { ToasterProvider } from "@/components/providers/toast-provider";
 import type { Metadata } from "next";
 import { Lexend_Deca } from "next/font/google";
-import { ToasterProvider } from "@/components/providers/toast-provider";
 import "./globals.css";
-import { ConvexClientProvider } from "@/components/providers/convex-provider";
 
 const lexend = Lexend_Deca({
   subsets: ["latin"],
@@ -31,12 +29,12 @@ export default function RootLayout({
 }) {
   return (
     <ConvexClientProvider>
-        <html lang="en">
-          <body className={lexend.className}>
-            <ToasterProvider />
-            {children}
-          </body>
-        </html>
+      <html lang="en">
+        <body className={lexend.className}>
+          <ToasterProvider />
+          {children}
+        </body>
+      </html>
     </ConvexClientProvider>
   );
 }

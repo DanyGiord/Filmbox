@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { ActionTooltip } from "../action-tooltip";
-import { Heart, Plus, Star } from "lucide-react";
-import CreateSessionModal from "../modals/create-session-modal";
-import { Button } from "./button";
-import { Dispatch, SetStateAction } from "react";
-import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Badge } from "./badge";
+import { cn } from "@/lib/utils";
+import { useMutation } from "convex/react";
+import { Heart, Plus, Star } from "lucide-react";
+import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
+import { ActionTooltip } from "../action-tooltip";
+import CreateSessionModal from "../modals/create-session-modal";
+import { Badge } from "./badge";
+import { Button } from "./button";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -39,38 +39,47 @@ const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fu
     const addFavActor = useMutation(api.user.addFavActor);
     const removeFavActor = useMutation(api.user.removeFavActor);
 
-    const addRemoveFavMovie = (movieId: number, title: string) => {
-        const convexUserId = localStorage.getItem("convexUserId");
-        if (!favMovieIds?.includes(movieId)) {
-            // @ts-ignore
-            const promise = addFavMovie({ id: convexUserId, movieId })
-                .then(() => {
-                    toast.success((
-                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#61D345]">added</span> to Favorite Movies</p>
-                    ), {
-                        style: {
-                            background: "#1a1a1a",
-                            color: "#fcfcfc",
-                            textAlign: "center"
-                        },
-                        position: "bottom-center",
-                        duration: 4000
-                    });
-                })
-                .catch((error) => {
-                    console.error(error);
-                    toast.error((
-                        <p>An error occured while <span className="text-[#61D345]">adding</span> <br /> <b className="font-black">{title}</b> <br /> to Favorite Movies</p>
-                    ), {
-                        style: {
-                            background: "#1a1a1a",
-                            color: "#fcfcfc",
-                            textAlign: "center"
-                        },
-                        position: "bottom-center",
-                        duration: 4000
-                    });
-                });
+  const addRemoveFavMovie = (movieId: number, title: string) => {
+    const convexUserId = localStorage.getItem("convexUserId");
+    if (!favMovieIds?.includes(movieId)) {
+      // @ts-ignore
+      const promise = addFavMovie({ id: convexUserId, movieId })
+        .then(() => {
+          toast.success(
+            <p>
+              <b className="font-black">{title}</b> <br />{" "}
+              <span className="text-[#61D345]">added</span> to Favorite Movies
+            </p>,
+            {
+              style: {
+                background: "#1a1a1a",
+                color: "#fcfcfc",
+                textAlign: "center",
+              },
+              position: "bottom-center",
+              duration: 4000,
+            }
+          );
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error(
+            <p>
+              An error occured while{" "}
+              <span className="text-[#61D345]">adding</span> <br />{" "}
+              <b className="font-black">{title}</b> <br /> to Favorite Movies
+            </p>,
+            {
+              style: {
+                background: "#1a1a1a",
+                color: "#fcfcfc",
+                textAlign: "center",
+              },
+              position: "bottom-center",
+              duration: 4000,
+            }
+          );
+        });
 
             // @ts-ignore
             setFavMovieIds((prev) => [...prev, movieId]);
@@ -109,8 +118,8 @@ const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fu
         }
     };
 
-    const addRemoveFavSerie = (serieId: number, title: string) => {
-        const convexUserId = localStorage.getItem("convexUserId");
+  const addRemoveFavSerie = (serieId: number, title: string) => {
+    const convexUserId = localStorage.getItem("convexUserId");
 
         if (!favSerieIds?.includes(serieId)) {
             // @ts-ignore
@@ -248,15 +257,15 @@ const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fu
         }
     }
 
-    const addRemoveFav = (id: number, title: string) => {
-        if (searchFor === 'movie') {
-            addRemoveFavMovie(id, title);
-        } else if (searchFor === 'tv') {
-            addRemoveFavSerie(id, title);
-        } else if (searchFor === 'actor') {
-            addRemoveFavActor(id, title);
-        }
+  const addRemoveFav = (id: number, title: string) => {
+    if (searchFor === "movie") {
+      addRemoveFavMovie(id, title);
+    } else if (searchFor === "tv") {
+      addRemoveFavSerie(id, title);
+    } else if (searchFor === "actor") {
+      addRemoveFavActor(id, title);
     }
+  };
 
     return (
         <>
@@ -396,4 +405,4 @@ const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fu
     )
 }
 
-export default Card
+export default Card;
