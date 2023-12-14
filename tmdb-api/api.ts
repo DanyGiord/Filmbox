@@ -100,10 +100,10 @@ export const fetchLatest = async (searchFor: string) => {
 
 export const fetchDiscover = async (
   page: number,
-  year: number,
+  year: number | undefined,
   sort: string,
   vote: string,
-  genres: number[],
+  genres: string[],
   language: string,
   searchFor: string
 ) => {

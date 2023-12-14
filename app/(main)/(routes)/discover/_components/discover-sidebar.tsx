@@ -20,16 +20,9 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const DiscoverSidebar = () => {
     // @ts-ignore
-    const { rating, setRating, selectedGenres, setSelectedGenres, searchFor, currentLanguage, setCurrentLanguage, currentYear, setCurrentYear, selectedSort, setSelectedSort } = useContext(DiscoverContext);
-
-    const [genres, setGenres] = useState<any[]>([]);
+    const { rating, setRating, selectedGenres, setSelectedGenres, searchFor, currentLanguage, setCurrentLanguage, currentYear, setCurrentYear, selectedSort, setSelectedSort, genres } = useContext(DiscoverContext);
 
     useEffect(() => {
-        const getGenres = async () => {
-            await fetchGenres(searchFor)
-                .then((res) => setGenres(res.genres))
-        }
-        getGenres();
         setSelectedGenres([]);
     }, [searchFor]);
 
@@ -51,7 +44,7 @@ const DiscoverSidebar = () => {
                 <AccordionItem value="item-1" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Genres</AccordionTrigger>
                     <AccordionContent>
-                        {genres.map(genre => (
+                        {genres.map((genre: any) => (
                             <div className="flex first-line:mb-1.5 items-center space-x-2 custom-checkbox" key={genre.id}>
                                 <input type="checkbox" checked={selectedGenres.includes(String(genre.id))} onChange={handleSelectedGenres} value={genre.id} name={genre.name} id={genre.name} className=" ring-gray peer genre" />
                                 <Label
@@ -68,30 +61,26 @@ const DiscoverSidebar = () => {
                     <AccordionTrigger className="text-white_text">Sort By</AccordionTrigger>
                     <AccordionContent>
                         <RadioGroup className="text-gray" onValueChange={setSelectedSort}>
-                            {/* @ts-ignore */}
-                            <Sort selectedSort={selectedSort} />
+                            <Sort />
                         </RadioGroup>
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-3" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Rating</AccordionTrigger>
                     <AccordionContent className="flex flex-col gap-y-2">
-                        {/* @ts-ignore */}
-                        <Rating rating={rating} setRating={setRating} />
+                        <Rating />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Languages</AccordionTrigger>
                     <AccordionContent>
-                        {/* @ts-ignore */}
-                        <Languages currentLanguage={currentLanguage} setCurrentLanguage={setCurrentLanguage} />
+                        <Languages />
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-5" className="border-b-[0px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Release year</AccordionTrigger>
                     <AccordionContent>
-                        {/* @ts-ignore */}
-                        <ReleaseYear currentYear={currentYear} setCurrentYear={setCurrentYear} />
+                        <ReleaseYear />
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>

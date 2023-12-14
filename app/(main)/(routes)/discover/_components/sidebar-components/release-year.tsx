@@ -26,7 +26,6 @@ const ReleaseYear = () => {
     const { currentYear, setCurrentYear } = useContext(DiscoverContext);
 
     const [open, setOpen] = useState(false)
-    const [value, setValue] = useState("");
     const [years, setYears] = useState<number[]>([]);
 
     useEffect(() => {
@@ -50,16 +49,15 @@ const ReleaseYear = () => {
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0 border-none rounded-2xl">
-                <Command className="bg-input_bg outline-[0px]">
+                <Command className="bg-input_bg outline-[0px] h-[200px]">
                     <CommandInput placeholder="Search year..." className="h-9 text-white_second" />
                     <CommandEmpty>No year found.</CommandEmpty>
                     <CommandGroup>
-                        {years.map((year) => (
+                        {years.map((year: any) => (
                             <CommandItem
                                 key={year}
                                 value={String(year)}
                                 onSelect={(currentValue) => {
-                                    setValue(currentValue);
                                     setCurrentYear(year)
                                     setOpen(false)
                                 }}

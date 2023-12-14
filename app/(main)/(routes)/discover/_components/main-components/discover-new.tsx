@@ -10,26 +10,11 @@ import SearchNewCard from "../search-new-card";
 
 const DiscoverNew = () => {
     // @ts-ignore
-    const { searchFor } = useContext(DiscoverContext);
+    const { searchFor, genres, latest } = useContext(DiscoverContext);
 
-    const [latest, setLatest] = useState<never[]>([]);
     const [skeleton, setSkeleton] = useState(true);
-    const [genres, setGenres] = useState<any[]>([]);
 
     useEffect(() => {
-        const getGenres = async () => {
-            await fetchGenres(searchFor)
-                .then((res) => setGenres(res.genres))
-        }
-        getGenres();
-    }, [searchFor]);
-
-    useEffect(() => {
-        const getLatest = async () => {
-            await fetchLatest(searchFor)
-                .then((res) => setLatest(res.results))
-        }
-        getLatest();
         setSkeleton(true);
     }, [searchFor]);
 
@@ -44,7 +29,7 @@ const DiscoverNew = () => {
             <h2 className="text-white_text text-2xl mb-5 font-bold">New Films</h2>
             <ScrollArea className="w-auto">
                 <div className="flex w-max gap-x-6 mb-2.5">
-                    {latest.map((single) => (
+                    {latest.map((single: any) => (
                         <SearchNewCard
                             route="new"
                             skeleton={skeleton}

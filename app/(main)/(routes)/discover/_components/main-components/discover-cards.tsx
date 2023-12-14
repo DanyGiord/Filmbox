@@ -12,33 +12,14 @@ const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverCards = () => {
     // @ts-ignore
-    const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages,
+    const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages, fullTitle, setFullTitle, cards, favMovieIds, setFavMovieIds, favSerieIds, setFavSerieIds,
     } = useContext(DiscoverContext);
 
     const { user } = useUser();
     const convex = useConvex();
-
-    const [cards, setCards] = useState([]);
     const [skeleton, setSkeleton] = useState(true);
 
-    const [fullTitle, setFullTitle] = useState<number | null>(null);
-
     useEffect(() => {
-        const getLatest = async () => {
-            await fetchDiscover(
-                currentPage,
-                currentYear,
-                selectedSort,
-                rating,
-                selectedGenres,
-                currentLanguage,
-                searchFor
-            ).then((res) => {
-                setCards(res.results);
-                setTotalPages(res.total_pages > 500 ? 500 : res.total_pages);
-            });
-        };
-        getLatest();
         setSkeleton(true);
     }, [
         currentPage,
@@ -50,16 +31,6 @@ const DiscoverCards = () => {
         searchFor,
     ]);
 
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [
-        currentYear,
-        selectedSort,
-        rating,
-        selectedGenres,
-        currentLanguage,
-        searchFor,
-    ]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -67,8 +38,7 @@ const DiscoverCards = () => {
         }, 2000);
     }, [skeleton]);
 
-    const [favMovieIds, setFavMovieIds] = useState<number[]>([]);
-    const [favSerieIds, setFavSerieIds] = useState<number[]>([]);
+    
 
     useEffect(() => {
         let ignore = false;
@@ -97,7 +67,7 @@ const DiscoverCards = () => {
 
     return (
         <div className="grid justify-items-center xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 sm:grid-cols-2 gap-4 w-full mb-7">
-            {cards.map((card) => (
+            {cards.map((card: any) => (
                 <Card
                     skeleton={skeleton}
                     // @ts-ignore
