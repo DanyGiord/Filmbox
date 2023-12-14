@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Context from "./discover-context";
+import { discoverSearch, fetchDiscover, fetchGenres, fetchLanguages, fetchLatest } from "@/tmdb-api/api";
 
 const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [rating, setRating] = useState<string>("5");
@@ -13,6 +14,89 @@ const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) =>
   const [selectedSort, setSelectedSort] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(500);
+  const [genres, setGenres] = useState<any[]>([]);
+  const [searchItems, setSearchItems] = useState<any>([]);
+  const [languages, setLanguages] = useState<any[]>([]);
+  const [years, setYears] = useState<number[]>([]);
+  const [fullTitle, setFullTitle] = useState<number | null>(null);
+  const [cards, setCards] = useState([]);
+  const [favMovieIds, setFavMovieIds] = useState<number[]>([]);
+  const [favSerieIds, setFavSerieIds] = useState<number[]>([]);
+  const [latest, setLatest] = useState<never[]>([]);
+
+  useEffect(() => {
+    const getGenres = async () => {
+      await fetchGenres(searchFor)
+        .then((res) => setGenres(res.genres))
+    }
+    getGenres();
+  }, [searchFor]);
+
+  useEffect(() => {
+    const getSearch = async () => {
+      await discoverSearch(searchFor, query)
+        .then(res => setSearchItems(res));
+    }
+    getSearch();
+  }, [query, searchFor]);
+
+  useEffect(() => {
+    const getLanguages = async () => {
+      await fetchLanguages()
+        .then((res) => setLanguages(res))
+    }
+    getLanguages();
+  }, [])
+
+  useEffect(() => {
+    const yearsArray = Array.from({ length: 2023 - 1882 + 1 }, (_, index) => 2023 - index);
+    setYears(yearsArray);
+  }, []);
+
+  useEffect(() => {
+    const getLatest = async () => {
+      await fetchDiscover(
+        currentPage,
+        currentYear,
+        selectedSort,
+        rating,
+        selectedGenres,
+        currentLanguage,
+        searchFor
+      ).then((res) => {
+        setCards(res.results);
+        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages);
+      });
+    };
+    getLatest();
+  }, [
+    currentPage,
+    currentYear,
+    selectedSort,
+    rating,
+    selectedGenres,
+    currentLanguage,
+    searchFor,
+  ]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    currentYear,
+    selectedSort,
+    rating,
+    selectedGenres,
+    currentLanguage,
+    searchFor,
+  ]);
+
+  useEffect(() => {
+    const getLatest = async () => {
+        await fetchLatest(searchFor)
+            .then((res) => setLatest(res.results))
+    }
+    getLatest();
+}, [searchFor]);
 
   return (
     <Context.Provider value={{
@@ -24,7 +108,16 @@ const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) =>
       currentYear, setCurrentYear,
       selectedSort, setSelectedSort,
       currentPage, setCurrentPage,
-      totalPages, setTotalPages
+      totalPages, setTotalPages,
+      genres, setGenres,
+      searchItems,
+      languages,
+      years,
+      fullTitle, setFullTitle,
+      cards,
+      favMovieIds, setFavMovieIds,
+      favSerieIds, setFavSerieIds,
+      latest
     }}>
       {children}
     </Context.Provider>

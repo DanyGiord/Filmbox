@@ -14,36 +14,20 @@ const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverNavbar = () => {
     // @ts-ignore
-    const { query, setQuery, searchFor, setSearchFor } = useContext(DiscoverContext);
-    const [genres, setGenres] = useState<any[]>([]);
-    const [searchItems, setSearchItems] = useState<any>([]);
+    const { query, setQuery, searchFor, setSearchFor, genres, searchItems } = useContext(DiscoverContext);
     const [showSearch, setShowSearch] = useState<boolean | undefined>(false);
     const [skeleton, setSkeleton] = useState<boolean>(true);
     const [mouseOver, setMouseOver] = useState<boolean>(false);
-
-
+  
     useEffect(() => {
-        const getGenres = async () => {
-            await fetchGenres(searchFor)
-                .then((res) => setGenres(res.genres))
-        }
-        getGenres();
-    }, [searchFor]);
+        setSkeleton(true)
+      }, [query, searchFor]);
 
     useEffect(() => {
         setTimeout(() => {
             setSkeleton(false)
-        }, 500);
+        }, 750);
     }, [skeleton])
-
-    useEffect(() => {
-        const getSearch = async () => {
-            await discoverSearch(searchFor, query)
-                .then(res => setSearchItems(res));
-        }
-        getSearch();
-        setSkeleton(true);
-    }, [query, searchFor]);
 
     return (
         <div className="mb-7 flex justify-between max-h-[48px] overflow-visible sticky top-5 z-[9999]">
@@ -51,23 +35,6 @@ const DiscoverNavbar = () => {
                 "w-[300px] relative transition-all duration-500",
                 showSearch && "w-[400px]"
             )}>
-                {/* <Input
-                    onChange={(e) => setQuery(e.target.value)}
-                    onMouseOver={() => setMouseOver(true)}
-                    onMouseLeave={() => setMouseOver(false)}
-                    placeholder="Search"
-                    iconSrc={Icons.Search}
-                    value={query}
-                    className={cn(
-                        "h-12",
-                        showSearch && query.length > 0 && "rounded-b-none"
-                    )}
-                    onFocus={() => {
-                        setShowSearch(true);
-                        setSkeleton(true)
-                    }}
-                    onBlur={() => setShowSearch(false)}
-                /> */}
                 <Search
                     query={query}
                     setQuery={setQuery}
@@ -81,9 +48,7 @@ const DiscoverNavbar = () => {
                         "bg-black_second absolute h-0 inset-0 border-t-2 border-gray/25 rounded-b-3xl text-white p-4 transition-all",
                         !mouseOver && 'opacity-30',
                         query.length > 0 && "h-[530px]"
-
                     )}
-                     
                     >
                         {searchItems.map((single: any) => (
                             <SearchNewCard

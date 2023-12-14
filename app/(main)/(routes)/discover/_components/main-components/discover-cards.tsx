@@ -13,65 +13,34 @@ import { Variants } from "framer-motion";
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverCards = () => {
-  // @ts-ignore
-  const {
-    currentPage,
-    setCurrentPage,
-    currentYear,
-    selectedSort,
-    rating,
-    selectedGenres,
-    currentLanguage,
-    searchFor,
-    totalPages,
-    setTotalPages,
-  } = useContext(DiscoverContext);
+    // @ts-ignore
+    const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages, fullTitle, setFullTitle, cards, favMovieIds, setFavMovieIds, favSerieIds, setFavSerieIds,
+    } = useContext(DiscoverContext);
 
-  const { user } = useUser();
-  const convex = useConvex();
+    const { user } = useUser();
+    const convex = useConvex();
+    const [skeleton, setSkeleton] = useState(true);
 
-  const [cards, setCards] = useState([]);
-  const [fullTitle, setFullTitle] = useState<number | null>(null);
-
-  useEffect(() => {
-    const getLatest = async () => {
-      await fetchDiscover(
+    useEffect(() => {
+        setSkeleton(true);
+    }, [
         currentPage,
         currentYear,
         selectedSort,
         rating,
         selectedGenres,
         currentLanguage,
-        searchFor
-      ).then((res) => {
-        setCards(res.results);
-        setTotalPages(res.total_pages > 500 ? 500 : res.total_pages);
-      });
-    };
-    getLatest();
-  }, [
-    currentPage,
-    currentYear,
-    selectedSort,
-    rating,
-    selectedGenres,
-    currentLanguage,
-    searchFor,
-  ]);
+        searchFor,
+    ]);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
-    currentYear,
-    selectedSort,
-    rating,
-    selectedGenres,
-    currentLanguage,
-    searchFor,
-  ]);
 
-  const [favMovieIds, setFavMovieIds] = useState<number[]>([]);
-  const [favSerieIds, setFavSerieIds] = useState<number[]>([]);
+    useEffect(() => {
+        setTimeout(() => {
+            setSkeleton(false);
+        }, 5000);
+    }, [skeleton]);
+
+    
 
   useEffect(() => {
     let ignore = false;
@@ -96,53 +65,26 @@ const DiscoverCards = () => {
     };
   }, [user, convex]);
 
-  // const variants: Variants = {
-  //   hidden: { opacity: 0 },
-  //   visible: (index: any) => ({
-  //     opacity: 1,
-  //     transition: {
-  //       delay: 1 * Math.floor(index / 3),
-  //     },
-  //   }),
-  // };
-  return (
-    <motion.div
-      layout
-      className="grid justify-items-center xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 sm:grid-cols-2 gap-4 w-full mb-7"
-    >
-      <AnimatePresence>
-        {cards.map((card, index) => (
-          <motion.div
-            layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            key={card.id}
-          >
-            <Card
-              // @ts-ignore
-              id={card.id}
-              poster_path={card.poster_path}
-              title={card.title ? card.title : card.name}
-              vote_average={card.vote_average}
-              release_date={
-                card.release_date ? card.release_date : card.first_air_date
-              }
-              fullTitle={fullTitle}
-              setFullTitle={setFullTitle}
-              searchFor={searchFor}
-              favMovieIds={favMovieIds}
-              setFavMovieIds={setFavMovieIds}
-              favSerieIds={favSerieIds}
-              setFavSerieIds={setFavSerieIds}
-              route="discover"
-            />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </motion.div>
-  );
+
+
+    return (
+        <div className="grid justify-items-center xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 sm:grid-cols-2 gap-4 w-full mb-7">
+            {cards.map((card: any) => (
+                <Card
+                    skeleton={skeleton}
+                    // @ts-ignore
+                    id={card.id} poster_path={card.poster_path} title={card.title ? card.title : card.name} vote_average={card.vote_average} release_date={card.release_date ? card.release_date : card.first_air_date}
+                    fullTitle={fullTitle}
+                    setFullTitle={setFullTitle}
+                    searchFor={searchFor}
+                    favMovieIds={favMovieIds}
+                    setFavMovieIds={setFavMovieIds}
+                    favSerieIds={favSerieIds}
+                    setFavSerieIds={setFavSerieIds}
+                />
+            ))}
+        </div>
+    );
 };
 
 export default DiscoverCards;
