@@ -68,7 +68,7 @@ const DiscoverNew = () => {
                                 </div>
                             ) : (
                                 <div>
-                                    <div className="bg-input_bg hover:bg-black_third transition-all rounded-3xl w-96 h-60 p-4 flex gap-x-3">
+                                    <div className=" group bg-input_bg hover:bg-black_third transition-all rounded-3xl w-[420px] h-60 p-4 flex gap-x-3">
                                         {/* @ts-ignore */}
                                         <img src={TMDB_API_IMG + single?.poster_path} alt="" className="w-36 h-full rounded-xl object-cover" />
                                         <div className="flex flex-col justify-between">
@@ -89,19 +89,19 @@ const DiscoverNew = () => {
                                                 <span className="text-white_text text-base">{single?.vote_average.toFixed(1)}</span>
                                             </div>
                                             {/* @ts-ignore */}
-                                            <span className="text-gray text-sm">{searchFor === 'movie' ? single?.release_date?.substring(0, 4) : single?.first_air_date?.substring(0, 4)}, {genres.find(genre => genre.id === single?.genre_ids[0])?.name}</span>
-                                            <div className="text-gray text-sm">
+                                            <span className="text-gray text-sm ">{searchFor === 'movie' ? single?.release_date?.substring(0, 4) : single?.first_air_date?.substring(0, 4)}, {genres.find(genre => genre.id === single?.genre_ids[0])?.name}</span>
+                                            <div className="text-gray text-sm pb-3">
                                                 {/* @ts-ignore */}
                                                 {searchFor === 'movie' && (single?.title?.length > 15 ? single?.overview?.substring(0, 60) + '...' : single?.overview?.substring(0, 80) + '...')}
                                                 {/* @ts-ignore */}
                                                 {searchFor === 'tv' && (single?.name?.length > 15 ? single?.overview?.substring(0, 60) + '...' : single?.overview?.substring(0, 80) + '...')}
                                             </div>
-                                            <div className="flex flex-row-reverse gap-x-1.5">
-                                                <Button variant="skew_gray" className="w-10/12 my-0">
+                                            <div className="flex flex-row gap-x-1.5">
+                                                <Button variant="skew" className="w-10/12 my-0">
                                                     Watch Now
                                                 </Button>
                                                 <ActionTooltip side="top" align="center" label="Create session">
-                                                    <Button variant="skew" className="w-2/12 mt-0 grid place-items-center bg-black_third">
+                                                    <Button variant="skew_gray" className="w-2/12 mt-0 grid place-items-center bg-black_third group-hover:bg-black_second">
                                                         <Plus className="w-3 h-3 text-white_text" />
                                                     </Button>
                                                 </ActionTooltip>

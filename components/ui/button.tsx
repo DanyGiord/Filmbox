@@ -18,8 +18,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        skew: "accent_main mt-6 transition-transform  duration-150 hover:skew-x-0 -skew-x-[15deg] rounded-xl w-40 h-12 mx-auto text-white text-sm capitalize",
-        skew_gray: "bg-[#242424] text-white_text mt-6 transition-transform duration-150 hover:skew-x-0 -skew-x-[15deg] rounded-xl w-40 h-12 mx-auto text-base capitalize",
+        skew: "accent_main mt-6  -skew-x-[15deg] rounded-xl w-40 h-12 mx-auto text-white text-sm capitalize",
+        skew_gray:
+          "bg-[#242424] text-white_text mt-6  -skew-x-[15deg] rounded-xl w-40 h-12 mx-auto text-base capitalize",
         plus: "bg-black_third mt-6 -skew-x-[15deg] rounded-xl w-16",
       },
       size: {
