@@ -1,15 +1,15 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { ActionTooltip } from "../action-tooltip";
-import { Heart, Plus, Star } from "lucide-react";
-import CreateSessionModal from "../modals/create-session-modal";
-import { Button } from "./button";
-import { Dispatch, SetStateAction } from "react";
-import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Badge } from "./badge";
+import { cn } from "@/lib/utils";
+import { useMutation } from "convex/react";
+import { Heart, Plus, Star } from "lucide-react";
+import Image from "next/image";
+import { Dispatch, SetStateAction } from "react";
 import toast from "react-hot-toast";
-import { motion } from "framer-motion";
+import { ActionTooltip } from "../action-tooltip";
+import CreateSessionModal from "../modals/create-session-modal";
+import { Badge } from "./badge";
+import { Button } from "./button";
+
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 interface CardProps {

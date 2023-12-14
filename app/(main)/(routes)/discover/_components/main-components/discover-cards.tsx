@@ -8,6 +8,7 @@ import { useConvex } from "convex/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import DiscoverContext from "../../_context/discover-context";
+import { Variants } from "framer-motion";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -95,13 +96,22 @@ const DiscoverCards = () => {
     };
   }, [user, convex]);
 
+  // const variants: Variants = {
+  //   hidden: { opacity: 0 },
+  //   visible: (index: any) => ({
+  //     opacity: 1,
+  //     transition: {
+  //       delay: 1 * Math.floor(index / 3),
+  //     },
+  //   }),
+  // };
   return (
     <motion.div
       layout
       className="grid justify-items-center xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 sm:grid-cols-2 gap-4 w-full mb-7"
     >
       <AnimatePresence>
-        {cards.map((card) => (
+        {cards.map((card, index) => (
           <motion.div
             layout
             initial={{ opacity: 0 }}
