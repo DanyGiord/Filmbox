@@ -35,7 +35,7 @@ const DiscoverCards = () => {
     useEffect(() => {
         setTimeout(() => {
             setSkeleton(false);
-        }, 2000);
+        }, 5000);
     }, [skeleton]);
 
     
@@ -79,7 +79,6 @@ const DiscoverCards = () => {
                     setFavMovieIds={setFavMovieIds}
                     favSerieIds={favSerieIds}
                     setFavSerieIds={setFavSerieIds}
-                    route="discover"
                 />
             ))}
         </div>

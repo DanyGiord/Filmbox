@@ -29,10 +29,9 @@ interface CardProps {
     favActorIds?: number[];
     setFavActorIds?: Dispatch<SetStateAction<number[]>>
     className?: string;
-    route: string;
 }
 
-const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_date, fullTitle, setFullTitle, searchFor, favMovieIds, favSerieIds, setFavMovieIds, setFavSerieIds, setFavActorIds, favActorIds, className }: CardProps) => {
+const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fullTitle, setFullTitle, searchFor, favMovieIds, favSerieIds, setFavMovieIds, setFavSerieIds, setFavActorIds, favActorIds, className }: CardProps) => {
     const addFavMovie = useMutation(api.user.addFavMovie);
     const removeFavMovie = useMutation(api.user.removeFavMovie);
     const addFavSerie = useMutation(api.user.addFavSerie);
@@ -80,7 +79,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
             const promise = removeFavMovie({ id: convexUserId, movieId })
                 .then(() => {
                     toast.success((
-                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#FF4B4B]">removed</span> from Favorite Movies</p>
+                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#FF4B4B]">deleted</span> from Favorite Movies</p>
                     ), {
                         style: {
                             background: "#1a1a1a",
@@ -94,7 +93,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
                 .catch((error) => {
                     console.error(error);
                     toast.error((
-                        <p>An error occured while <span className="text-[#FF4B4B]">removing</span> <br /> <b className="font-black">{title}</b> <br /> to Favorite Movies</p>
+                        <p>An error occured while <span className="text-[#FF4B4B]">deleting</span> <br /> <b className="font-black">{title}</b> <br /> to Favorite Movies</p>
                     ), {
                         style: {
                             background: "#1a1a1a",
@@ -150,7 +149,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
             const promise = removeFavSerie({ id: convexUserId, serieId })
                 .then(() => {
                     toast.success((
-                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#FF4B4B]">removed</span> from Favorite Series</p>
+                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#FF4B4B]">deleted</span> from Favorite Series</p>
                     ), {
                         style: {
                             background: "#1a1a1a",
@@ -164,7 +163,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
                 .catch((error) => {
                     console.error(error);
                     toast.error((
-                        <p>An error occured while <span className="text-[#FF4B4B]">removing</span> <br /> <b className="font-black">{title}</b> <br /> to Favorite Series</p>
+                        <p>An error occured while <span className="text-[#FF4B4B]">deleting</span> <br /> <b className="font-black">{title}</b> <br /> from Favorite Series</p>
                     ), {
                         style: {
                             background: "#1a1a1a",
@@ -219,7 +218,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
             const promise = removeFavActor({ id: convexUserId, actorId })
                 .then(() => {
                     toast.success((
-                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#FF4B4B]">removed</span> from Favorite Actors</p>
+                        <p><b className="font-black">{title}</b> <br /> <span className="text-[#FF4B4B]">deleted</span> from Favorite Actors</p>
                     ), {
                         style: {
                             background: "#1a1a1a",
@@ -233,7 +232,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
                 .catch((error) => {
                     console.error(error);
                     toast.error((
-                        <p>An error occured while <span className="text-[#FF4B4B]">removing</span> <br /> <b className="font-black">{title}</b> <br /> to Favorite Actors</p>
+                        <p>An error occured while <span className="text-[#FF4B4B]">deleting</span> <br /> <b className="font-black">{title}</b> <br /> from Favorite Actors</p>
                     ), {
                         style: {
                             background: "#1a1a1a",
@@ -310,14 +309,14 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
                             )}
                             <div
                                 className={cn(
-                                    `absolute inset-0 p-3 w-full h-full flex flex-col justify-between rounded-3xl card_main group hover:backdrop-blur-[1px] hover:bg-black_second/50 overflow-hidden transition-all`
+                                    `absolute inset-0 p-3 w-full h-full flex flex-col justify-between rounded-3xl card_main group hover:backdrop-blur-[1.5px] hover:bg-black_second/50 overflow-hidden transition-all`
                                 )}
                             >
                                 <div className="flex justify-between">
                                     <ActionTooltip
                                         side="bottom"
                                         align="start"
-                                        label="Add to favorites"
+                                        label={(favMovieIds?.includes(id) || favSerieIds?.includes(id) || favActorIds?.includes(id) ? "Delete favorite" : "Add to favorite")}
                                     >
                                         {/* @ts-ignore */}
                                         <button onClick={() => addRemoveFav(id, title)}
@@ -327,9 +326,7 @@ const Card = ({ route, skeleton, id, poster_path, title, vote_average, release_d
                                                 className={cn(
                                                     "w-4 h-4 text-white_text transition-all",
                                                     // @ts-ignore
-                                                    searchFor === "movie" && favMovieIds?.includes(id) && "text-red fill-red",
-                                                    searchFor === "tv" && favSerieIds?.includes(id) && "text-red fill-red",
-                                                    searchFor === "actor" && favActorIds?.includes(id) && "text-red fill-red",
+                                                    (favMovieIds?.includes(id) || favSerieIds?.includes(id) || favActorIds?.includes(id)) && "text-red fill-red"
                                                 )}
                                             />
                                         </button>

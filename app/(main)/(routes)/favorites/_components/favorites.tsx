@@ -108,7 +108,7 @@ const Favorites = () => {
                         <h2 className="text-white_second text-2xl font-bold">Favorite movies</h2>
                         <ScrollArea className="w-auto">
                             <div className="flex w-max gap-3 pl-3 py-2.5">
-                                {favMovies.map(favMovie => (
+                                {[...favMovies].reverse().map(favMovie => (
                                     <Card
                                         skeleton={skeleton}
                                         id={favMovie.id}
@@ -123,7 +123,6 @@ const Favorites = () => {
                                         setFavMovieIds={setFavMovieIds}
                                         favSerieIds={favSerieIds}
                                         className="w-[190px] cardcard"
-                                        route="favorites"
                                     />
                                 ))}
                             </div>
@@ -136,7 +135,7 @@ const Favorites = () => {
                         <h2 className="text-white_second text-2xl font-bold">Favorite series</h2>
                         <ScrollArea className="w-auto">
                             <div className="flex w-max gap-3 pl-3 py-2.5">
-                                {favSeries.map(favSerie => (
+                                {[...favSeries].reverse().map(favSerie => (
                                     <Card
                                         skeleton={skeleton}
                                         id={favSerie.id}
@@ -152,7 +151,6 @@ const Favorites = () => {
                                         favSerieIds={favSerieIds}
                                         setFavSerieIds={setFavSerieIds}
                                         className="w-[190px]"
-                                        route="favorites"
                                     />
                                 ))}
                             </div>
@@ -165,7 +163,7 @@ const Favorites = () => {
                         <h2 className="text-white_second text-2xl font-bold">Favorite actors</h2>
                         <ScrollArea className="w-auto">
                             <div className="flex w-max gap-3 pl-3 py-2.5">
-                                {favActors.map(favActor => (
+                                {[...favActors].reverse().map(favActor => (
                                     <Card
                                         skeleton={skeleton}
                                         id={favActor.id}
@@ -175,7 +173,6 @@ const Favorites = () => {
                                         setFavActorIds={setFavActorIds}
                                         searchFor="actor"
                                         className="w-[190px]"
-                                        route="favorites"
                                     />
                                 ))}
                             </div>

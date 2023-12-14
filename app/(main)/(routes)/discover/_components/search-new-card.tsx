@@ -42,7 +42,7 @@ const SearchNewCard = ({ route, skeleton, searchFor, poster_path, title, vote_av
             ) : (
                 <div>
                     <div className={cn("group bg-input_bg hover:bg-black_third transition-all rounded-3xl w-[373px] h-60 p-4 flex gap-x-3",
-                    route === 'search' && 'bg-black_second relative rounded-xl w-full my-2'
+                        route === 'search' && 'bg-black_second relative rounded-xl w-full my-2'
                     )}
                     >
                         {/* @ts-ignore */}
@@ -52,15 +52,73 @@ const SearchNewCard = ({ route, skeleton, searchFor, poster_path, title, vote_av
                             <h3 className="text-xl text-white_text font-semibold">{title?.substring(0, 14)}{title?.length > 14 && "..."}</h3>
                             <div className="flex gap-x-2 items-center">
                                 {/* @ts-ignore */}
-                                {vote_average?.toFixed(1) < 1 ? '' : vote_average?.toFixed(1) > 2 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : <StarHalf className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" />}
+                                {parseFloat(vote_average?.toFixed(1)) >= 2.0 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : (
+                                    <div className={cn(
+                                        "relative",
+                                        // @ts-ignore
+
+                                    )}>
+                                        <Star className="w-4 h-4 text-[#ffa800]" /> {/* Pozadinska zvezda */}
+                                        {/* @ts-ignore */}
+                                        <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${(vote_average / 2) * 100}%` }}>
+                                            <Star className="w-4 h-4 fill-[#ffa800] text-transparent" /> {/* Popunjena zvezda */}
+                                        </div>
+                                    </div>
+                                )}
                                 {/* @ts-ignore */}
-                                {vote_average?.toFixed(1) < 3 ? '' : vote_average?.toFixed(1) > 4 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : <StarHalf className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" />}
+                                {parseFloat(vote_average?.toFixed(1)) >= 4.0 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : (
+                                    <div className={cn(
+                                        "relative",
+                                        // @ts-ignore
+
+                                    )}>
+                                        <Star className="w-4 h-4 text-[#ffa800]" /> {/* Pozadinska zvezda */}
+                                        {/* @ts-ignore */}
+                                        <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${((vote_average - 2) / 2) * 100}%` }}>
+                                            <Star className="w-4 h-4 fill-[#ffa800] text-transparent" /> {/* Popunjena zvezda */}
+                                        </div>
+                                    </div>
+                                )}
                                 {/* @ts-ignore */}
-                                {vote_average?.toFixed(1) < 5 ? '' : vote_average?.toFixed(1) > 6 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : <StarHalf className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" />}
+                                {parseFloat(vote_average?.toFixed(1)) >= 6.0 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : (
+                                    <div className={cn(
+                                        "relative",
+                                        // @ts-ignore
+                                    )}>
+                                        <Star className="w-4 h-4 text-[#ffa800]" /> {/* Pozadinska zvezda */}
+                                        {/* @ts-ignore */}
+                                        <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${((vote_average - 4) / 2) * 100}%` }}>
+                                            <Star className="w-4 h-4 fill-[#ffa800] text-transparent" /> {/* Popunjena zvezda */}
+                                        </div>
+                                    </div>
+                                )}
                                 {/* @ts-ignore */}
-                                {vote_average?.toFixed(1) < 7 ? '' : vote_average?.toFixed(1) > 8 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : <StarHalf className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" />}
+                                {parseFloat(vote_average?.toFixed(1)) >= 8.0 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : (
+                                    <div className={cn(
+                                        "relative",
+                                        // @ts-ignore
+                                    )}>
+                                        <Star className="w-4 h-4 text-[#ffa800]" /> {/* Pozadinska zvezda */}
+                                        {/* @ts-ignore */}
+                                        <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${vote_average >= 6 && (((vote_average - 6) / 2) * 100)}%` }}>
+                                            <Star className="w-4 h-4 fill-[#ffa800] text-transparent" /> {/* Popunjena zvezda */}
+                                        </div>
+                                    </div>
+                                )}
                                 {/* @ts-ignore */}
-                                {vote_average?.toFixed(1) < 9 ? '' : vote_average?.toFixed(1) > 10 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : <StarHalf className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" />}
+                                {parseFloat(vote_average?.toFixed(1)) >= 10.0 ? <Star className="w-3.5 h-3.5 text-[#ffa800] fill-[#ffa800]" /> : (
+                                    <div className={cn(
+                                        "relative",
+                                        // @ts-ignore
+
+                                    )}>
+                                        <Star className="w-4 h-4 text-[#ffa800]" /> {/* Pozadinska zvezda */}
+                                        {/* @ts-ignore */}
+                                        <div className="absolute top-0 left-0 overflow-hidden" style={{ width: `${((vote_average - 8) / 2) * 100}%` }}>
+                                            <Star className="w-4 h-4 fill-[#ffa800] text-transparent" /> {/* Popunjena zvezda */}
+                                        </div>
+                                    </div>
+                                )}
                                 {/* @ts-ignore */}
                                 <span className="text-white_text text-base">{vote_average?.toFixed(1)}</span>
                             </div>
