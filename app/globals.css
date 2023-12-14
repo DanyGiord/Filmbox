@@ -330,3 +330,16 @@ body {
 .discover-search-overlay {
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.75)
 }
+
+.cardcard {
+  transform: rotateX('15deg');
+}
+/* Stilovi za Firefox */
+.custom-scrollbar {
+  scrollbar-width: 0px;
+  scrollbar-color: #888 #f1f1f1;
+}
+/* Postavljanje širine scrollbar-a */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px;
+}

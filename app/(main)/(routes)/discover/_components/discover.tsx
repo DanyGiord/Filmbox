@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import DiscoverSidebar from "./discover-sidebar";
 import DiscoverNavbar from "./discover-navbar";
 
-import DiscoverNew from "./discover-new";
+import DiscoverNew from "./main-components/discover-new";
 import DiscoverMain from "./discover-main";
 
 const Discover = () => {
@@ -20,12 +20,12 @@ const Discover = () => {
     return (
         <div className={cn(
             "p-1",
-            "md:p-5 flex gap-x-4"
+            "md:p-5 flex gap-x-5"
         )}>
-            <div className="w-[18%]">
+            <div className="w-[20%]">
                 <DiscoverSidebar />
             </div>
-            <div className="w-[82%]">
+            <div className="w-[80%]">
                 <DiscoverNavbar />
                 <DiscoverNew />
                 <DiscoverMain />

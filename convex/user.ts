@@ -46,7 +46,7 @@ export const addFavMovie = mutation({
   handler: async (ctx, args) => {
     const user = await ctx.db.get(args.id);
 
-    if (!user || !user.favMovies) {
+    if (!user) {
       throw new Error("Korisnik ili lista filmova nije pronađena.");
     }
 
@@ -68,5 +68,72 @@ export const removeFavMovie = mutation({
     const updatedFavMovies = user.favMovies.filter(id => id !== args.movieId);
 
     await ctx.db.patch(args.id, { favMovies: updatedFavMovies });
+  },
+});
+
+export const addFavSerie = mutation({
+  args: {
+    id: v.id("user"),
+    serieId: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+
+    if (!user) {
+      throw new Error("Korisnik ili lista filmova nije pronađena.");
+    }
+
+    await ctx.db.patch(args.id, { favSeries: [...(user?.favSeries || []), args.serieId] });
+  },
+});
+
+export const removeFavSerie = mutation({
+  args: {
+    id: v.id("user"),
+    serieId: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+
+    if (!user) {
+      throw new Error("Korisnik nije pronađen.");
+    }
+
+    const updatedFavSeries = user.favSeries.filter(id => id !== args.serieId);
+
+    await ctx.db.patch(args.id, { favSeries: updatedFavSeries });
+  },
+});
+export const addFavActor = mutation({
+  args: {
+    id: v.id("user"),
+    actorId: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+
+    if (!user) {
+      throw new Error("Korisnik nije pronađen.");
+    }
+
+    await ctx.db.patch(args.id, { favSeries: [...(user?.favSeries || []), args.actorId] });
+  },
+});
+
+export const removeFavActor = mutation({
+  args: {
+    id: v.id("user"),
+    actorId: v.number(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    
+    if (!user) {
+      throw new Error("Korisnik nije pronađen.");
+    }
+
+    const updatedFavActors = user.favActors.filter(id => id !== args.actorId);
+
+    await ctx.db.patch(args.id, { favActors: updatedFavActors });
   },
 });

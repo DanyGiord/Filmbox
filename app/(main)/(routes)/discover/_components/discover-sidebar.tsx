@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup } from "@/components/ui/radio-group"
 import ReleaseYear from "./sidebar-components/release-year";
 import Sort from "./sidebar-components/sort";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 const DiscoverSidebar = () => {
     // @ts-ignore
@@ -45,7 +46,7 @@ const DiscoverSidebar = () => {
     };
 
     return (
-        <div className="w-full rounded-3xl bg-input_bg px-6 py-3  sticky top-5">
+        <div className="w-full rounded-3xl bg-input_bg px-6 py-3 sticky top-5 max-h-screen overflow-y-scroll custom-scrollbar">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Genres</AccordionTrigger>

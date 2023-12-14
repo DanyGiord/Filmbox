@@ -46,7 +46,8 @@ const Sort = () => {
                         selectedSort === sort.value
                             ? setSelectedSort("")
                             : setSelectedSort(sort.value)
-                    }} checked={selectedSort === sort.value} value={sort.value} id={sort.id} className={cn(
+                            // @ts-ignore
+                    }} checked={selectedSort === sort.value} name={sort.id} value={sort.value} id={sort.id} className={cn(
                         "sort-radio border-2 border-gray text-red transition-all",
                         selectedSort === sort.value && "border-red"
                     )}
