@@ -12,6 +12,9 @@ body,
 
 body {
   background-color: #0e0e0e;
+  overscroll-behavior: smooth; /* Ovo sprečava "overscroll" efekat na nekim pregledačima */
+  scroll-snap-type: y mandatory;
+  scroll-sensitivity: 50%;
 }
 
 @layer base {

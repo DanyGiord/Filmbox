@@ -4,30 +4,29 @@ import { useContext, useEffect, useState } from "react";
 import DiscoverContext from "../_context/discover-context";
 
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Label } from "@/components/ui/label";
 import { RadioGroup } from "@/components/ui/radio-group";
-import { fetchGenres } from "@/tmdb-api/api";
 import Languages from "./sidebar-components/languages";
 import Rating from "./sidebar-components/rating";
 import ReleaseYear from "./sidebar-components/release-year";
 import Sort from "./sidebar-components/sort";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion } from "framer-motion";
 
 const DiscoverSidebar = () => {
     // @ts-ignore
-    const { rating, setRating, selectedGenres, setSelectedGenres, searchFor, currentLanguage, setCurrentLanguage, currentYear, setCurrentYear, selectedSort, setSelectedSort, genres } = useContext(DiscoverContext);
+    const {  selectedGenres, setSelectedGenres, searchFor, setSelectedSort, genres, hidden, setHidden } = useContext(DiscoverContext);
 
     useEffect(() => {
         setSelectedGenres([]);
     }, [searchFor]);
 
-  const handleSelectedGenres = (e: any) => {
-    const { value, checked } = e.target;
+    const handleSelectedGenres = (e: any) => {
+        const { value, checked } = e.target;
 
         if (checked) {
             // @ts-ignore
@@ -37,26 +36,16 @@ const DiscoverSidebar = () => {
             setSelectedGenres((prev) => prev.filter((e) => e !== value));
         }
     };
-    const {scrollY} = useScroll()
-    const [hidden, setHidden] = useState(false)
 
-    useMotionValueEvent(scrollY,"change",(latest)=>{
-        const previous = scrollY.getPrevious();
-        if(latest > previous && latest > 150){
-            setHidden(true);
-        }else{
-            setHidden(false);
-        }
-    })   
     return (
         <motion.div
-        variants={{
-            visible:{y:0},
-            hidden:{x:"-200%"},
-        }}
-        animate={hidden ? "hidden":"visible"}
-        transition={{duration: 0.35, ease:"easeInOut"}}
-         className="w-full rounded-3xl bg-input_bg px-6 py-3 sticky top-5 max-h-screen overflow-y-scroll custom-scrollbar">
+            variants={{
+                visible: { x: 0 },
+                hidden: { x: "-200%" },
+            }}
+            animate={hidden ? "hidden" : "visible"}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="w-full rounded-3xl bg-input_bg px-6 py-3 sticky top-5 max-h-screen overflow-y-scroll custom-scrollbar">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1" className="border-b-[3px] border-b-[#242424]">
                     <AccordionTrigger className="text-white_text">Genres</AccordionTrigger>

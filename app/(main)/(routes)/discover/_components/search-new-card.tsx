@@ -16,18 +16,23 @@ interface SearchNewCardProps {
   overview: string;
   genre_ids: number[];
   genres: number[];
+  hidden?: boolean;
 }
 
-const SearchNewCard = ({ route, searchFor, poster_path, title, vote_average, release_date, overview, genre_ids, genres }: SearchNewCardProps) => {
+const SearchNewCard = ({ hidden, route, poster_path, title, vote_average, release_date, overview, genre_ids, genres }: SearchNewCardProps) => {
   return (
 
     <div>
       <div className={cn("group bg-input_bg hover:bg-black_third transition-all rounded-3xl w-[373px] h-60 p-4 flex gap-x-3",
-        route === 'search' && 'bg-black_second relative rounded-xl w-full my-2'
+        route === 'search' && 'bg-black_second relative rounded-xl w-full my-2',
+        hidden && "w-[466px] h-[300px]"
       )}
       >
         {/* @ts-ignore */}
-        <Image src={TMDB_API_IMG + poster_path} alt={title} width={144} height={208} className="w-36 h-full rounded-xl object-cover" />
+        <Image src={TMDB_API_IMG + poster_path} alt={title} width={hidden ? 144 : 180} height={hidden ? 208 : 260} className={cn(
+          "w-36 h-full rounded-xl object-cover transition-all",
+          hidden && "w-[180px]"
+          )} />
         <div className="flex flex-col justify-between">
           {/* @ts-ignore */}
           <h3 className="text-xl text-white_text font-semibold">{title?.substring(0, 14)}{title?.length > 14 && "..."}</h3>

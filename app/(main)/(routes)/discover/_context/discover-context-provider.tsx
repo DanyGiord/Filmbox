@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Context from "./discover-context";
 import { discoverSearch, fetchDiscover, fetchGenres, fetchLanguages, fetchLatest } from "@/tmdb-api/api";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 
 const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [rating, setRating] = useState<string>("5");
@@ -23,6 +24,25 @@ const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) =>
   const [favMovieIds, setFavMovieIds] = useState<number[]>([]);
   const [favSerieIds, setFavSerieIds] = useState<number[]>([]);
   const [latest, setLatest] = useState<never[]>([]);
+  const [hidden, setHidden] = useState<boolean>(false);
+
+  const { scrollY } = useScroll()
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    // const previous = scrollY.getPrevious();
+    // if (latest > previous && latest > 150) {
+    //   setHidden(true);
+    // } else {
+    //   setHidden(false);
+    // }
+    const isScrolledToTop = latest <= 0;
+
+    if (isScrolledToTop) {
+      setHidden(false);
+    } else {
+      setHidden(true);
+    }
+  })
 
   useEffect(() => {
     const getGenres = async () => {
@@ -92,11 +112,11 @@ const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) =>
 
   useEffect(() => {
     const getLatest = async () => {
-        await fetchLatest(searchFor)
-            .then((res) => setLatest(res.results))
+      await fetchLatest(searchFor)
+        .then((res) => setLatest(res.results))
     }
     getLatest();
-}, [searchFor]);
+  }, [searchFor]);
 
   return (
     <Context.Provider value={{
@@ -117,7 +137,8 @@ const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) =>
       cards,
       favMovieIds, setFavMovieIds,
       favSerieIds, setFavSerieIds,
-      latest
+      latest,
+      hidden, setHidden,
     }}>
       {children}
     </Context.Provider>

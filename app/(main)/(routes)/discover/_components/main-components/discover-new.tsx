@@ -9,7 +9,7 @@ import SearchNewCard from "../search-new-card";
 
 const DiscoverNew = () => {
   // @ts-ignore
-  const { searchFor } = useContext(DiscoverContext);
+  const { searchFor, hidden } = useContext(DiscoverContext);
 
   const [latest, setLatest] = useState<never[]>([]);
   const [genres, setGenres] = useState<any[]>([]);
@@ -29,7 +29,13 @@ const DiscoverNew = () => {
   }, [searchFor]);
 
   return (
-    <>
+    <motion.div
+      variants={{
+        visible: { paddingTop: "0" },
+        hidden: { paddingTop: "100px" },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+    >
       <h2 className="text-white_text text-2xl mb-5 font-bold">New Films</h2>
       <ScrollArea className="w-auto">
         <AnimatePresence>
@@ -43,8 +49,9 @@ const DiscoverNew = () => {
           >
             {latest.map((single) => (
               <SearchNewCard
-              // @ts-ignore
-              key={single.id}
+                // @ts-ignore
+                key={single.id}
+                hidden={hidden}
                 route="new"
                 searchFor={searchFor}
                 // @ts-ignore
@@ -56,7 +63,7 @@ const DiscoverNew = () => {
         </AnimatePresence>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
-    </>
+    </motion.div>
   );
 };
 

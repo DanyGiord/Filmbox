@@ -9,12 +9,13 @@ import { useConvex } from "convex/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import DiscoverContext from "../../_context/discover-context";
+import { cn } from "@/lib/utils";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverCards = () => {
   // @ts-ignore
-  const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages, favMovieIds, setFavMovieIds,favSerieIds, setFavSerieIds,
+  const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, setTotalPages, favMovieIds, setFavMovieIds,favSerieIds, setFavSerieIds, hidden
   } = useContext(DiscoverContext);
 
   const { user } = useUser();
@@ -87,7 +88,10 @@ const DiscoverCards = () => {
   return (
     <motion.div
       layout
-      className="grid justify-items-center xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 sm:grid-cols-2 gap-4 w-full mb-7"
+      className={cn(
+        "grid xs:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-8 sm:grid-cols-2 gap-4 w-full mb-7",
+        hidden && "3xl:grid-cols-10 2xl:grid-cols-8 xl:grid-cols-6 lg:grid-cols-5"
+      )}
     >
       <AnimatePresence>
         {cards.map((card) => (
