@@ -13,7 +13,7 @@ import { Button } from "./button";
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 interface CardProps {
-    skeleton: boolean;
+    key?: string;
     id: number;
     poster_path: string;
     title: string;
@@ -31,7 +31,7 @@ interface CardProps {
     className?: string;
 }
 
-const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fullTitle, setFullTitle, searchFor, favMovieIds, favSerieIds, setFavMovieIds, setFavSerieIds, setFavActorIds, favActorIds, className }: CardProps) => {
+const Card = ({ id, poster_path, title, vote_average, release_date, fullTitle, setFullTitle, searchFor, favMovieIds, favSerieIds, setFavMovieIds, setFavSerieIds, setFavActorIds, favActorIds, className }: CardProps) => {
     const addFavMovie = useMutation(api.user.addFavMovie);
     const removeFavMovie = useMutation(api.user.removeFavMovie);
     const addFavSerie = useMutation(api.user.addFavSerie);
@@ -286,9 +286,6 @@ const Card = ({ skeleton, id, poster_path, title, vote_average, release_date, fu
                         key={id}
                         className={cn("relative w-full h-full flex justify-center items-center")}
                     >
-                        {skeleton && (
-                            <div className="animate-pulse w-full h-full rounded-3xl absolute inset-0 z-[9999]"></div>
-                        )}
                         <div
                             // @ts-ignore
                             className={`relative rounded-3xl w-full h-full`}
