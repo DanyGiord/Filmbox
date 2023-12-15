@@ -14,7 +14,7 @@ const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverCards = () => {
   // @ts-ignore
-  const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages, favMovieIds, setFavMovieIds, favSerieIds, setFavSerieIds,
+  const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages, favMovieIds, setFavMovieIds,favSerieIds, setFavSerieIds,
   } = useContext(DiscoverContext);
 
   const { user } = useUser();
