@@ -44,7 +44,7 @@ const DiscoverSidebar = () => {
                 hidden: { x: "-200%" },
             }}
             animate={hidden ? "hidden" : "visible"}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             className="w-full rounded-3xl bg-input_bg px-6 py-3 sticky top-5 max-h-screen overflow-y-scroll custom-scrollbar">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1" className="border-b-[3px] border-b-[#242424]">

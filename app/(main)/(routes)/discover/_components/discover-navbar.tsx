@@ -28,7 +28,7 @@ const DiscoverNavbar = () => {
                 hidden: { y: "-200%" },
             }}
             animate={hidden ? "hidden" : "visible"}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
             className="mb-7 flex justify-between max-h-[48px] overflow-visible sticky top-5 z-[9999]">
             <div className={cn(
                 "w-[300px] relative transition-all duration-500",
