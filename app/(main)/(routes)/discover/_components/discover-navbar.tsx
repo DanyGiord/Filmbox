@@ -16,18 +16,12 @@ const DiscoverNavbar = () => {
     // @ts-ignore
     const { query, setQuery, searchFor, setSearchFor, genres, searchItems } = useContext(DiscoverContext);
     const [showSearch, setShowSearch] = useState<boolean | undefined>(false);
-    const [skeleton, setSkeleton] = useState<boolean>(true);
     const [mouseOver, setMouseOver] = useState<boolean>(false);
   
     useEffect(() => {
-        setSkeleton(true)
       }, [query, searchFor]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setSkeleton(false)
-        }, 750);
-    }, [skeleton])
+
 
     return (
         <div className="mb-7 flex justify-between max-h-[48px] overflow-visible sticky top-5 z-[9999]">
@@ -41,7 +35,6 @@ const DiscoverNavbar = () => {
                     setMouseOver={setMouseOver}
                     showSearch={showSearch}
                     setShowSearch={setShowSearch}
-                    setSkeleton={setSkeleton}
                 />
                 {showSearch && query.length > 0 && (
                     <ScrollArea onMouseOver={() => setMouseOver(true)} onMouseLeave={() => setMouseOver(false)} className={cn(
@@ -53,7 +46,6 @@ const DiscoverNavbar = () => {
                         {searchItems.map((single: any) => (
                             <SearchNewCard
                                 route="search"
-                                skeleton={skeleton}
                                 searchFor={searchFor}
                                 // @ts-ignore
                                 poster_path={single.poster_path} title={single.title ? single.title : single.name} vote_average={single.vote_average} release_date={single.release_date} overview={single.overview} genre_ids={single.genre_ids}
