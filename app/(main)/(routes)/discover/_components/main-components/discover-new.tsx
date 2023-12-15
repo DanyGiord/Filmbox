@@ -43,6 +43,8 @@ const DiscoverNew = () => {
           >
             {latest.map((single) => (
               <SearchNewCard
+              // @ts-ignore
+              key={single.id}
                 route="new"
                 searchFor={searchFor}
                 // @ts-ignore

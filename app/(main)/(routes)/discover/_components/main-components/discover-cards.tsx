@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import Card from "@/components/ui/card";
@@ -114,7 +115,6 @@ const DiscoverCards = () => {
               setFavSerieIds={setFavSerieIds}
             />
           </motion.div>
-          // asd
         ))}
       </AnimatePresence>
     </motion.div>

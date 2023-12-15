@@ -11,10 +11,9 @@ interface SearchProps {
     setMouseOver: Dispatch<SetStateAction<boolean>>;
     showSearch: boolean | undefined;
     setShowSearch: Dispatch<SetStateAction<boolean | undefined>>;
-    setSkeleton: Dispatch<SetStateAction<boolean>>;
 }
 
-const Search = ({ query, setQuery, setMouseOver, showSearch, setShowSearch, setSkeleton }: SearchProps) => {
+const Search = ({ query, setQuery, setMouseOver, showSearch, setShowSearch }: SearchProps) => {
     return (
         <Input
             onChange={(e) => setQuery(e.target.value)}
@@ -29,7 +28,6 @@ const Search = ({ query, setQuery, setMouseOver, showSearch, setShowSearch, setS
             )}
             onFocus={() => {
                 setShowSearch(true);
-                setSkeleton(true)
             }}
             onBlur={() => setShowSearch(false)}
         />

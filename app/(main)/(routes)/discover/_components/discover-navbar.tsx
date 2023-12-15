@@ -45,6 +45,7 @@ const DiscoverNavbar = () => {
                     >
                         {searchItems.map((single: any) => (
                             <SearchNewCard
+                                key={single.id}
                                 route="search"
                                 searchFor={searchFor}
                                 // @ts-ignore
