@@ -2,6 +2,7 @@ import { ActionTooltip } from "@/components/action-tooltip";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Plus, Star, StarHalf } from "lucide-react";
+import Image from "next/image";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -26,7 +27,7 @@ const SearchNewCard = ({ route, searchFor, poster_path, title, vote_average, rel
       )}
       >
         {/* @ts-ignore */}
-        <img src={TMDB_API_IMG + poster_path} alt="" className="w-36 h-full rounded-xl object-cover" />
+        <Image src={TMDB_API_IMG + poster_path} alt={title} width={144} height={208} className="w-36 h-full rounded-xl object-cover" />
         <div className="flex flex-col justify-between">
           {/* @ts-ignore */}
           <h3 className="text-xl text-white_text font-semibold">{title?.substring(0, 14)}{title?.length > 14 && "..."}</h3>

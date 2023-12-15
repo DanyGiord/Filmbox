@@ -11,7 +11,7 @@ const DiscoverContextProvider = ({ children }: { children: React.ReactNode }) =>
   const [searchFor, setSearchFor] = useState<string>("movie");
   const [currentLanguage, setCurrentLanguage] = useState<string>(''); // No Language === "xx"
   const [currentYear, setCurrentYear] = useState<number>()
-  const [selectedSort, setSelectedSort] = useState<string>("");
+  const [selectedSort, setSelectedSort] = useState<string>("popularity");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(500);
   const [genres, setGenres] = useState<any[]>([]);

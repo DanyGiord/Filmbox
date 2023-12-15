@@ -291,7 +291,6 @@ const Card = ({ id, poster_path, title, vote_average, release_date, fullTitle, s
                             className={`relative rounded-3xl w-full h-full`}
                         >
                             {/* @ts-ignore */}
-                            {poster_path ? (
                                 <Image
                                     // @ts-ignore
                                     src={TMDB_API_IMG + poster_path}
@@ -300,19 +299,7 @@ const Card = ({ id, poster_path, title, vote_average, release_date, fullTitle, s
                                     width={266.5}
                                     height={350}
                                     className="rounded-3xl w-full h-full object-cover"
-                                    blurDataURL="/assets/no-img.jpg"
                                 />
-                            ) : (
-                                <Image
-                                    // @ts-ignore
-                                    src={"/assets/no-img.jpg"}
-                                    // @ts-ignore
-                                    alt={title}
-                                    width={266.5}
-                                    height={350}
-                                    className="rounded-3xl w-full h-full object-cover"
-                                />
-                            )}
                             <div
                                 className={cn(
                                     `absolute inset-0 p-3 w-full h-full flex flex-col justify-between rounded-3xl card_main group hover:backdrop-blur-[1.5px] hover:bg-black_second/50 overflow-hidden transition-all`
