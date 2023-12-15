@@ -9,13 +9,12 @@ import { useConvex } from "convex/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import DiscoverContext from "../../_context/discover-context";
-import { Variants } from "framer-motion";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
 const DiscoverCards = () => {
   // @ts-ignore
-  const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages,
+  const { currentPage, setCurrentPage, currentYear, selectedSort, rating, selectedGenres, currentLanguage, searchFor, totalPages, setTotalPages, favMovieIds, setFavMovieIds, favSerieIds, setFavSerieIds,
   } = useContext(DiscoverContext);
 
   const { user } = useUser();
@@ -61,8 +60,6 @@ const DiscoverCards = () => {
     searchFor,
   ]);
 
-  const [favMovieIds, setFavMovieIds] = useState<number[]>([]);
-  const [favSerieIds, setFavSerieIds] = useState<number[]>([]);
 
   useEffect(() => {
     let ignore = false;
