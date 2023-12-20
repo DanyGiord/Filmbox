@@ -34,7 +34,7 @@ const Discover = () => {
                     hidden: { width: "0%", opacity: 0 },
                 }}
                 animate={hidden ? "hidden" : "visible"}
-                transition={{ duration: 0.35, ease: "easeOut" }}
+                transition={{ duration: 0.75, ease: "backInOut" }}
                 className="w-[20%]"
             >
                 <DiscoverSidebar />
@@ -45,7 +45,7 @@ const Discover = () => {
                     hidden: { width: "97.5%" },
                 }}
                 animate={hidden ? "hidden" : "visible"}
-                transition={{ duration: 0.35, ease: "easeOut" }}
+                transition={{ duration: 0.75, ease: "backInOut" }}
                 className="w-[80%]"
             >
                 <DiscoverNavbar />
