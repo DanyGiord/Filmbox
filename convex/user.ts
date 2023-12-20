@@ -12,6 +12,9 @@ export const createProfile = mutation({
     favMovies: v.array(v.number()),
     favSeries: v.array(v.number()),
     favActors: v.array(v.number()),
+
+    imageId: v.optional(v.string()),
+    username: v.optional(v.string())
   },
   handler: async (ctx, args) => {
     const newUser = await ctx.db.insert("user", {
@@ -23,6 +26,9 @@ export const createProfile = mutation({
       favMovies: args.favMovies,
       favSeries: args.favSeries,
       favActors: args.favActors,
+
+      imageId: args.imageId,
+      username: args.username,
     });
   },
 });
@@ -65,7 +71,7 @@ export const removeFavMovie = mutation({
       throw new Error("Korisnik ili lista filmova nije pronađena.");
     }
 
-    const updatedFavMovies = user.favMovies.filter(id => id !== args.movieId);
+    const updatedFavMovies = user.favMovies.filter((id: any) => id !== args.movieId);
 
     await ctx.db.patch(args.id, { favMovies: updatedFavMovies });
   },
@@ -96,10 +102,10 @@ export const removeFavSerie = mutation({
     const user = await ctx.db.get(args.id);
 
     if (!user) {
-      throw new Error("Korisnik nije pronađen.");
+      throw new Error("User not found.");
     }
 
-    const updatedFavSeries = user.favSeries.filter(id => id !== args.serieId);
+    const updatedFavSeries = user.favSeries.filter((id: any) => id !== args.serieId);
 
     await ctx.db.patch(args.id, { favSeries: updatedFavSeries });
   },
@@ -113,7 +119,7 @@ export const addFavActor = mutation({
     const user = await ctx.db.get(args.id);
 
     if (!user) {
-      throw new Error("Korisnik nije pronađen.");
+      throw new Error("User not found.");
     }
 
     await ctx.db.patch(args.id, { favSeries: [...(user?.favSeries || []), args.actorId] });
@@ -129,11 +135,99 @@ export const removeFavActor = mutation({
     const user = await ctx.db.get(args.id);
     
     if (!user) {
-      throw new Error("Korisnik nije pronađen.");
+      throw new Error("User not found.");
     }
 
-    const updatedFavActors = user.favActors.filter(id => id !== args.actorId);
+    const updatedFavActors = user.favActors.filter((id: any) => id !== args.actorId);
 
     await ctx.db.patch(args.id, { favActors: updatedFavActors });
   },
 });
+
+export const generateUploadUrl = mutation({
+  args: {
+    id: v.id("user"),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    
+    if (!user) {
+      throw new Error("User not found.");
+    }
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const saveImageId = mutation({
+  args: {
+    id: v.id("user"),
+    uploaded: v.object({
+      imageId: v.string(),
+    }),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    ctx.db.patch(args.id, {
+      imageId: args.uploaded.imageId,
+    });
+  },
+});
+
+export const getImageUrl = mutation({
+  args: {
+    id: v.id("user"),
+    imageId: v.id("_storage")
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    return ctx.storage.getUrl(args.imageId);
+  }
+});
+
+export const setName = mutation({
+  args: {
+    id: v.id("user"),
+    firstName: v.string(),
+    lastName: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    ctx.db.patch(args.id, {
+      firstName: args.firstName,
+      lastName: args.lastName,
+    });
+  }
+})
+
+export const setUsername = mutation({
+  args: {
+    id: v.id("user"),
+    username: v.string()
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.id);
+    
+    if (!user) {
+      throw new Error("User not found.");
+    }
+
+    ctx.db.patch(args.id, {
+      username: args.username,
+    });
+  }
+})

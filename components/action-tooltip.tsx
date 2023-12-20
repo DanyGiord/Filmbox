@@ -24,7 +24,7 @@ import {
                   <TooltipTrigger asChild>
                       {children}
                   </TooltipTrigger>
-                  <TooltipContent side={side} align={align}>
+                  <TooltipContent side={side} align={align} className="z-[99999999]">
                       <p className="font-semibold text-sm capitalize">
                           {label.toLowerCase()}
                       </p>

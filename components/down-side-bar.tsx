@@ -69,12 +69,12 @@ const DownSideBar = () => {
       "
       >
         {routes.map((route) => (
-          <div key={route.id} className={`order-${route.id} md:order-none z-[9999999999999999999]`}>
+          <div key={route.id} className={`order-${route.id} md:order-none`}>
             <ActionTooltip side="right" align="center" label={route.label}>
-              <Link href={route.path} key={route.id} >
+              <Link href={route.path} key={route.id}>
                 <route.Icon
                   className={cn(
-                    `w-10 md:w-7 h-10 md:h-7 text-gray hover:text-white_text transition`,
+                    `w-10 md:w-7 h-10 md:h-7 text-gray hover:text-white_text hover:scale-[1.15] transition-all`,
                     pathname === route.path && "text-white_text scale-125 md:scale-100 mb-1 md:mb-0",
                   )}
                 />

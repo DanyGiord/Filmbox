@@ -1,6 +1,6 @@
-import Image from 'next/image';
+import Image from 'next/image'
 
-const FavoritesNavbar = () => {
+const AccountNavbar = () => {
     return (
         <div className="w-full pt-5 flex justify-center">
             <Image
@@ -13,4 +13,4 @@ const FavoritesNavbar = () => {
     )
 }
 
-export default FavoritesNavbar
+export default AccountNavbar

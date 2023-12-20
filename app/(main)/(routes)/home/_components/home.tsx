@@ -11,7 +11,7 @@ const Home = () => {
    
 
     return (
-        <div className="h-full flex flex-col mt-4 items-center justify-center w-full bg-black_main text-white_text text-center">                                     {/* obrisati h-screen */}
+        <div className="h-screen flex flex-col mt-4 items-center justify-center w-full text-white_text text-center">                                     {/* obrisati h-screen */}
             Welcome to the Home page
         </div>
     );

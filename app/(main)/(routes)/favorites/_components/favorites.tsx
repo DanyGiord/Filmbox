@@ -110,7 +110,6 @@ const Favorites = () => {
                             <div className="flex w-max gap-3 pl-3 py-2.5">
                                 {[...favMovies].reverse().map(favMovie => (
                                     <Card
-                                        skeleton={skeleton}
                                         id={favMovie.id}
                                         poster_path={favMovie.poster_path}
                                         title={favMovie.title}
@@ -137,7 +136,6 @@ const Favorites = () => {
                             <div className="flex w-max gap-3 pl-3 py-2.5">
                                 {[...favSeries].reverse().map(favSerie => (
                                     <Card
-                                        skeleton={skeleton}
                                         id={favSerie.id}
                                         poster_path={favSerie.poster_path}
                                         title={favSerie.name}
@@ -165,7 +163,6 @@ const Favorites = () => {
                             <div className="flex w-max gap-3 pl-3 py-2.5">
                                 {[...favActors].reverse().map(favActor => (
                                     <Card
-                                        skeleton={skeleton}
                                         id={favActor.id}
                                         poster_path={favActor.profile_path}
                                         title={favActor.name}

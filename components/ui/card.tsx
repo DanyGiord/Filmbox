@@ -290,7 +290,6 @@ const Card = ({ id, poster_path, title, vote_average, release_date, fullTitle, s
                             // @ts-ignore
                             className={`relative rounded-3xl w-full h-full`}
                         >
-                            {/* @ts-ignore */}
                                 <Image
                                     // @ts-ignore
                                     src={TMDB_API_IMG + poster_path}
@@ -311,7 +310,6 @@ const Card = ({ id, poster_path, title, vote_average, release_date, fullTitle, s
                                         align="start"
                                         label={(favMovieIds?.includes(id) || favSerieIds?.includes(id) || favActorIds?.includes(id) ? "Delete favorite" : "Add to favorite")}
                                     >
-                                        {/* @ts-ignore */}
                                         <button onClick={() => addRemoveFav(id, title)}
                                             className="w-9 h-7 grid place-items-center rounded-full bg-black_third"
                                         >

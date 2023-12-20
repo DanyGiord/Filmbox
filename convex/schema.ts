@@ -11,5 +11,8 @@ export default defineSchema({
         favMovies: v.array(v.number()),
         favSeries: v.array(v.number()),
         favActors: v.array(v.number()),
+
+        imageId: v.optional(v.string()),
+        username: v.optional(v.string()),
     }),
 })
