@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef, useContext } from 'react';
-import DiscoverContext from "../../_context/discover-context";
+import DiscoverContext from "../../../_context/context";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 
 

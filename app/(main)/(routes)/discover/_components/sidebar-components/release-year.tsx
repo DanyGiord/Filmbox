@@ -1,6 +1,6 @@
 'use client'
 
-import DiscoverContext from "../../_context/discover-context"
+import DiscoverContext from "../../../_context/context"
 import { useEffect, useState, useContext } from "react"
 
 import { ChevronsUpDown, Check } from "lucide-react"

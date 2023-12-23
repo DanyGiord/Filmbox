@@ -8,7 +8,7 @@ import { useUser } from "@clerk/nextjs";
 import { useConvex } from "convex/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
-import DiscoverContext from "../../_context/discover-context";
+import DiscoverContext from "../../../_context/context";
 import { cn } from "@/lib/utils";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
@@ -106,7 +106,7 @@ const DiscoverCards = () => {
           >
             <Card
               // @ts-ignore
-              id={card.id} poster_path={card.poster_path} title={card.title ? card.title : card.name} vote_average={card.vote_average} release_date={ card.release_date ? card.release_date : card.first_air_date}
+              id={card.id} poster_path={card.poster_path} title={card.original_title ? card.original_title : card.original_name} vote_average={card.vote_average} release_date={ card.release_date ? card.release_date : card.first_air_date}
               fullTitle={fullTitle}
               setFullTitle={setFullTitle}
               searchFor={searchFor}

@@ -60,14 +60,14 @@ const FullName = () => {
                         <ActionTooltip side="right" align="center" label="Save">
                             <button
                                 type="submit"
-                                className="group grid place-items-center w-9 h-9 rounded-full border-2 border-black_main bg-input_bg cursor-pointer transition-all">
-                                <Check className="w-4 h-4 text-gray group-hover:text-[#4bb543]" />
+                                className="group grid place-items-center w-9 h-9 rounded-full bg-input_bg cursor-pointer transition-all">
+                                <Check className="w-4 h-4 text-gray group-hover:text-[#4bb543] group-hover:w-[18px] group-hover:h-[18px] transition-all" />
                             </button>
                         </ActionTooltip>
                     ) : (
                         <ActionTooltip side="right" align="center" label="Finish editing">
-                            <div role="button" onClick={() => setIsUpdatingName(false)} className="group grid place-items-center w-9 h-9 rounded-full border-2 border-black_main bg-input_bg cursor-pointer transition-all">
-                                <X className="w-4 h-4 text-gray group-hover:text-red" />
+                            <div role="button" onClick={() => setIsUpdatingName(false)} className="group grid place-items-center w-9 h-9 rounded-full bg-input_bg cursor-pointer transition-all">
+                                <X className="w-4 h-4 text-gray group-hover:text-red group-hover:w-[18px] group-hover:h-[18px] transition-all" />
                             </div>
                         </ActionTooltip>
                     )}
@@ -78,8 +78,8 @@ const FullName = () => {
                         {fullName}
                     </h1>
                     <ActionTooltip side="right" align="center" label="Edit name">
-                        <div role="button" onClick={() => setIsUpdatingName(true)} className="group grid place-items-center w-9 h-9 rounded-full border-2 border-black_main bg-input_bg cursor-pointer transition-all">
-                            <Edit className="w-4 h-4 text-gray group-hover:text-white_text" />
+                        <div role="button" onClick={() => setIsUpdatingName(true)} className="group grid place-items-center w-9 h-9 rounded-full bg-input_bg cursor-pointer transition-all">
+                            <Edit className="w-4 h-4 text-gray group-hover:text-white_text group-hover:w-[18px] group-hover:h-[18px] transition-all" />
                         </div>
                     </ActionTooltip>
                 </div>

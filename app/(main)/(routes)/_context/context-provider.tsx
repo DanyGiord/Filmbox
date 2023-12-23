@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from "react";
-import Context from "./discover-context";
+import Context from "./context";
 import { discoverSearch, fetchDiscover, fetchGenres, fetchLanguages, fetchLatest } from "@/tmdb-api/api";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 

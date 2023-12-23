@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Plus, Star, StarHalf } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const TMDB_API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG_W_500;
 
@@ -17,9 +18,12 @@ interface SearchNewCardProps {
   genre_ids: number[];
   genres: number[];
   hidden?: boolean;
+  id?: string;
 }
 
-const SearchNewCard = ({ hidden, route, poster_path, title, vote_average, release_date, overview, genre_ids, genres }: SearchNewCardProps) => {
+const SearchNewCard = ({ hidden, route, poster_path, title, vote_average, release_date, overview, genre_ids, genres, searchFor, id }: SearchNewCardProps) => {
+  const router = useRouter();
+
   return (
 
     <div>
@@ -32,7 +36,7 @@ const SearchNewCard = ({ hidden, route, poster_path, title, vote_average, releas
         <Image src={TMDB_API_IMG + poster_path} alt={title} width={hidden ? 144 : 180} height={hidden ? 208 : 260} className={cn(
           "w-36 h-full rounded-xl object-cover transition-all",
           hidden && "w-[180px]"
-          )} />
+        )} />
         <div className="flex flex-col justify-between">
           {/* @ts-ignore */}
           <h3 className="text-xl text-white_text font-semibold">{title?.substring(0, 14)}{title?.length > 14 && "..."}</h3>
@@ -115,7 +119,13 @@ const SearchNewCard = ({ hidden, route, poster_path, title, vote_average, releas
             {overview?.substring(0, 60) + '...'}
           </div>
           <div className="flex flex-row gap-x-1.5">
-            <Button variant="skew" className="w-9/12 my-0">
+            <Button onClick={() => {
+              if (searchFor === "movie") {
+                router.push(`/movies/${id}`)
+              } else if (searchFor === "tv") {
+                router.push(`/series/${id}`)
+              }
+            }} variant="skew" className="w-9/12 my-0">
               <span className="skew-x-[15deg]">Watch Now</span>
             </Button>
             <ActionTooltip side="top" align="center" label="Create session">

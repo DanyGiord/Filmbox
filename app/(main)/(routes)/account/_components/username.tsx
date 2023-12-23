@@ -42,7 +42,7 @@ const Username = () => {
     return (
         <>
             {isUpdatingUsername ? (
-                <form onSubmit={(e) => handleSubmit(e)} className="flex items-center gap-x-3 translate-x-4">
+                <form onSubmit={(e) => handleSubmit(e)} className="flex items-center gap-x-3 translate-x-7">
                     <Input
                         value={inputUsername}
                         placeholder="Username"
@@ -52,13 +52,13 @@ const Username = () => {
                         <ActionTooltip side="right" align="center" label="Save">
                             <button
                                 type="submit"
-                                className="group grid place-items-center w-9 h-9 rounded-full border-2 border-black_main bg-input_bg cursor-pointer transition-all">
+                                className="group grid place-items-center w-9 h-9 rounded-full bg-input_bg cursor-pointer transition-all">
                                 <Check className="w-4 h-4 text-gray group-hover:text-[#4bb543]" />
                             </button>
                         </ActionTooltip>
                     ) : (
                         <ActionTooltip side="right" align="center" label="Finish editing">
-                            <div role="button" onClick={() => setIsUpdatingUsername(false)} className="group grid place-items-center w-9 h-9 rounded-full border-2 border-black_main bg-input_bg cursor-pointer transition-all">
+                            <div role="button" onClick={() => setIsUpdatingUsername(false)} className="group grid place-items-center w-9 h-9 rounded-full bg-input_bg cursor-pointer transition-all">
                                 <X className="w-4 h-4 text-gray group-hover:text-red" />
                             </div>
                         </ActionTooltip>
@@ -72,7 +72,7 @@ const Username = () => {
                                 @{username}
                             </span>
                             <ActionTooltip side="right" align="center" label="Edit username">
-                                <div role="button" onClick={() => setIsUpdatingUsername(true)} className="group grid place-items-center w-9 h-9 rounded-full border-2 border-black_main bg-input_bg cursor-pointer transition-all">
+                                <div role="button" onClick={() => setIsUpdatingUsername(true)} className="group grid place-items-center w-9 h-9 rounded-full bg-input_bg cursor-pointer transition-all">
                                     <Edit className="w-4 h-4 text-gray group-hover:text-white_text" />
                                 </div>
                             </ActionTooltip>

@@ -9,7 +9,7 @@ import DiscoverNew from "./main-components/discover-new";
 import DiscoverMain from "./discover-main";
 import { motion } from "framer-motion";
 import { useContext } from "react";
-import DiscoverContext from "../_context/discover-context";
+import DiscoverContext from "../../_context/context";
 
 const Discover = () => {
     // @ts-ignore

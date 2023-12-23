@@ -4,7 +4,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { fetchGenres, fetchLatest } from "@/tmdb-api/api";
 import { AnimatePresence, motion } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
-import DiscoverContext from "../../_context/discover-context";
+import DiscoverContext from "../../../_context/context";
 import SearchNewCard from "../search-new-card";
 
 const DiscoverNew = () => {
@@ -27,6 +27,7 @@ const DiscoverNew = () => {
     };
     getLatest();
   }, [searchFor]);
+  
 
   return (
     <motion.div
@@ -37,7 +38,7 @@ const DiscoverNew = () => {
       animate={hidden ? "hidden" : "visible"}
     >
       <h2 className="text-white_text text-2xl mb-5 font-bold">New Films</h2>
-      <ScrollArea className="w-auto">
+      <ScrollArea id="horizontal-scroll" className="w-auto overflow-w-hidden">
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
@@ -50,10 +51,9 @@ const DiscoverNew = () => {
             {latest.map((single) => (
               <SearchNewCard
                 // @ts-ignore
-                key={single.id}
+                key={single.id} id={single.id} searchFor={searchFor}
                 hidden={hidden}
                 route="new"
-                searchFor={searchFor}
                 // @ts-ignore
                 poster_path={single.poster_path} title={single.title ? single.title : single.name} vote_average={single.vote_average} release_date={single.release_date} overview={single.overview} genre_ids={single.genre_ids}
                 genres={genres}

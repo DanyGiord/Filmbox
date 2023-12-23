@@ -37,13 +37,16 @@ export const searchSeries = async (query: string) => {
     .then((json) => json.results);
 };
 
-export const discoverSearch = async (searchFor: string, query: string = 'Batman') => {
+export const discoverSearch = async (
+  searchFor: string,
+  query: string = "Batman"
+) => {
   return fetch(
     `${TMDB_API_BASE_URL}/search/${searchFor}?api_key=${TMDB_API_KEY}&include_adult=false&query=${query}`
   )
     .then((res) => res.json())
     .then((json) => json.results);
-}
+};
 
 export const searchActors = async (query: string) => {
   if (query.length === 0) {
@@ -62,11 +65,31 @@ export const searchActors = async (query: string) => {
 
 // SINGLE MOVIE
 
+export const fetchSingleSimilar = async (id: string, searchFor: string) => {
+  return await fetch(
+    `${TMDB_API_BASE_URL}/${searchFor}/${id}/similar?language=en-US&page=1`,
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${process.env.NEXT_PUBLIC_TMDB_API_BEARER}`,
+      },
+    }
+  ).then((res) => res.json());
+};
+
 export const fetchMovie = async (movieId: number) => {
   return await fetch(
     `${TMDB_API_BASE_URL}/movie/${movieId}?api_key=${TMDB_API_KEY}&language=en-US`
   ).then((res) => res.json());
 };
+
+export const fetchSingleImages = async (id: number, searchFor: string) => {
+  return await fetch(
+    `${TMDB_API_BASE_URL}/${searchFor}/${id}/images?api_key=${TMDB_API_KEY}`
+  ).then((res) => res.json());
+};
+
 export const fetchSerie = async (serieId: number) => {
   return await fetch(
     `${TMDB_API_BASE_URL}/tv/${serieId}?api_key=${TMDB_API_KEY}&language=en-US`
@@ -75,6 +98,18 @@ export const fetchSerie = async (serieId: number) => {
 export const fetchActor = async (actorId: number) => {
   return await fetch(
     `${TMDB_API_BASE_URL}/person/${actorId}?api_key=${TMDB_API_KEY}&language=en-US`
+  ).then((res) => res.json());
+};
+export const fetchSingleActors = async (movieId: number, searchFor: string) => {
+  return await fetch(
+    `${TMDB_API_BASE_URL}/${searchFor}/${movieId}/credits?language=en-US`,
+    {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `${process.env.NEXT_PUBLIC_TMDB_API_BEARER}`,
+      },
+    }
   ).then((res) => res.json());
 };
 
@@ -115,8 +150,7 @@ export const fetchDiscover = async (
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization:
-          `${process.env.NEXT_PUBLIC_TMDB_API_BEARER}`,
+        Authorization: `${process.env.NEXT_PUBLIC_TMDB_API_BEARER}`,
       },
     }
   ).then((res) => res.json());

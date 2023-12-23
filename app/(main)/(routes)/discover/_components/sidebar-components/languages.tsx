@@ -1,6 +1,6 @@
 'use client'
 
-import DiscoverContext from "../../_context/discover-context";
+import DiscoverContext from "../../../_context/context";
 import { useContext, useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";

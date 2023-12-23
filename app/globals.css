@@ -9,9 +9,11 @@ body,
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+html{scroll-behavior:smooth;}
 
 body {
   background-color: #0e0e0e;
+  scroll-behavior: smooth;
 }
 
 @layer base {
@@ -342,4 +344,8 @@ body {
 /* Postavljanje širine scrollbar-a */
 .custom-scrollbar::-webkit-scrollbar {
   width: 0px;
+}
+
+.backdrop-bg {
+  background: linear-gradient(0deg, rgba(32, 32, 32, 0.80) 0%, rgba(35, 35, 35, 0.00) 79.06%)
 }

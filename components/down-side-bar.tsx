@@ -56,7 +56,7 @@ const DownSideBar = () => {
       
     // </div>
     <aside className="
-    w-full h-20 fixed bottom-0 left-0 right-0 flex flex-row rounded-t-3xl bg-black_second
+    w-full h-20 fixed bottom-0 left-0 right-0 flex flex-row z-[9999999] rounded-t-3xl bg-black_second
     md:w-20 md:h-full md:top-0 md:rounded-tl-none md:rounded-r-3xl md:flex-col
     "
     >
