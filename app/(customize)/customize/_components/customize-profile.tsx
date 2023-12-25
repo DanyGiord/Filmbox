@@ -164,7 +164,7 @@ const CustomizeProfile = () => {
   }
 
   return (
-    <div className="bg-black_main w-full overflow-hidden h-screen">
+    <div className="w-full overflow-hidden h-screen">
       <div className="flex flex-col justify-center items-center text-center py-5">
         <h1 className="text-white text-2xl md:text-4xl font-bold">
           {currentTab === 1 && "Select your favorite movies"}

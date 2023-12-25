@@ -34,6 +34,8 @@ module.exports = {
         black_second: "#1A1A1A",
         black_third: "#1F1F1F",
         gray: "#565656",
+        gray_secondary: "#242424",
+        gray_third: "#424242",
         white: "#FAFAFA",
         white_text: "#FCFCFC",
         white_second: "#E2E2E2",
